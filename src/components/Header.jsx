@@ -47,7 +47,7 @@ export default function Header({
       label: 'การ์ดคำศัพท์', 
       sub: 'Vocab Flashcards',
       icon: Bookmark, 
-      badge: '50 คำ' 
+      badge: '160 คำ' 
     },
     { 
       id: 'quiz', 

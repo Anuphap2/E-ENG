@@ -59,7 +59,7 @@ export default function OverviewTab({ onSelectUnit, onStartFullExam, onNavigateT
     {
       step: '03',
       title: 'ท่องศัพท์ Flashcards',
-      desc: 'ทบทวน 50 คำศัพท์ออกสอบบ่อย พลิกการ์ดจำความหมายภาษาไทยและฟังการออกเสียงที่ถูกต้อง',
+      desc: 'ทบทวน 160 คำศัพท์ออกสอบบ่อย พลิกการ์ดจำความหมายภาษาไทยและฟังการออกเสียงที่ถูกต้อง',
       actionText: 'ท่องคำศัพท์',
       tabId: 'vocab',
       icon: Bookmark,
