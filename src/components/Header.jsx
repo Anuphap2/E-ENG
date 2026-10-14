@@ -3,6 +3,7 @@ import {
   GraduationCap, 
   BookOpen, 
   Headphones, 
+  FileText,
   Bookmark, 
   Award,
   Globe,
@@ -41,6 +42,14 @@ export default function Header({
       sub: 'Listening Lab',
       icon: Headphones, 
       badge: '11 Tracks' 
+    },
+    { 
+      id: 'reading', 
+      label: 'ห้องฝึกอ่านบทความ', 
+      sub: 'Reading Studio',
+      icon: FileText, 
+      badge: '5 Passages',
+      highlight: true
     },
     { 
       id: 'vocab', 

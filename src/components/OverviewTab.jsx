@@ -13,6 +13,7 @@ import {
   ArrowRight,
   Globe,
   Headphones,
+  FileText,
   Bookmark,
   CheckCircle2,
   Check
@@ -58,15 +59,24 @@ export default function OverviewTab({ onSelectUnit, onStartFullExam, onNavigateT
     },
     {
       step: '03',
+      title: 'ฝึกอ่าน Reading Studio',
+      desc: 'เจาะลึก 5 บทอ่านออกสอบ (Marie Curie, Activity 29 Artisans, TOEIC Invoice) พร้อมแปลไทยทีละประโยคและสูตร Skim/Scan',
+      actionText: 'เปิดห้องอ่านบทความ',
+      tabId: 'reading',
+      icon: FileText,
+      color: 'bg-teal-50 text-teal-800 border-teal-200 hover:bg-teal-100/80'
+    },
+    {
+      step: '04',
       title: 'ท่องศัพท์ Flashcards',
-      desc: 'ทบทวน 160 คำศัพท์ออกสอบบ่อย พลิกการ์ดจำความหมายภาษาไทยและฟังการออกเสียงที่ถูกต้อง',
+      desc: 'ทบทวน 160 คำศัพท์ออกสอบบ่อย พร้อมโหมดจับคู่ พลิกการ์ด และมินิเกมฝึกความจำรวดเร็ว',
       actionText: 'ท่องคำศัพท์',
       tabId: 'vocab',
       icon: Bookmark,
       color: 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100/80'
     },
     {
-      step: '04',
+      step: '05',
       title: 'ห้องสอบจำลอง 80 ข้อ',
       desc: 'ทำข้อสอบจำลอง Focus Mode ทีละข้อ มีเฉลยภาษาไทยละเอียดและเทคนิคจำ หรือจำลองสอบจริง 90 นาที',
       actionText: 'เริ่มทำข้อสอบ',
@@ -127,7 +137,7 @@ export default function OverviewTab({ onSelectUnit, onStartFullExam, onNavigateT
               <span className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-black">
                 ★
               </span>
-              <span>เส้นทางการเรียนรู้ 4 ขั้นตอน (Recommended Study Path)</span>
+              <span>เส้นทางการเรียนรู้ 5 ขั้นตอน (Recommended Study Path)</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               ศึกษาตามลำดับเพื่อความเข้าใจที่แม่นยำและเพิ่มโอกาสคว้าคะแนนเต็ม 25%
@@ -135,7 +145,7 @@ export default function OverviewTab({ onSelectUnit, onStartFullExam, onNavigateT
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
           {steps.map((st, idx) => {
             const Icon = st.icon;
             return (

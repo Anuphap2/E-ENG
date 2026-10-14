@@ -3,6 +3,7 @@ import Header from './components/Header';
 import OverviewTab from './components/OverviewTab';
 import LessonsTab from './components/LessonsTab';
 import ListeningLabTab from './components/ListeningLabTab';
+import ReadingTab from './components/ReadingTab';
 import VocabTab from './components/VocabTab';
 import QuizTab from './components/QuizTab';
 import Footer from './components/Footer';
@@ -100,6 +101,13 @@ export default function App() {
           <ListeningLabTab
             speech={speech}
             onJumpToUnit={(unit) => handleStartUnitQuiz(unit)}
+          />
+        )}
+
+        {activeTab === 'reading' && (
+          <ReadingTab
+            speech={speech}
+            onNavigateQuiz={handleStartFullExam}
           />
         )}
 
