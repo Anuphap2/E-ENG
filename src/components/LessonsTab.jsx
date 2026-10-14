@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { soundEffects } from '../utils/soundEffects';
+import confetti from 'canvas-confetti';
 import { 
   GraduationCap, 
   BookOpen, 
@@ -7,6 +9,7 @@ import {
   ArrowRight, 
   Volume2, 
   CheckCircle2, 
+  XCircle,
   AlertCircle, 
   Building2, 
   MessageSquare, 
@@ -15,11 +18,67 @@ import {
   FileCode2, 
   Mail,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Zap,
+  Award
 } from 'lucide-react';
 
-export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = 'unit5' }) {
+const UNIT_CHECKPOINTS = {
+  unit5: {
+    q: 'วุฒิระดับ Associate Degree โดยทั่วไปต้องเรียนสะสมประมาณกี่หน่วยกิต (Credit Hours)?',
+    choices: [
+      '30 หน่วยกิต (1 ปี)',
+      '60 หน่วยกิต (2 ปี)',
+      '120 หน่วยกิต (4 ปี)',
+      '180 หน่วยกิต (5 ปี)'
+    ],
+    answer: 1,
+    explanation: 'วุฒิอนุปริญญา (Associate Degree) เรียนประมาณ 2 ปี สะสม 60 หน่วยกิต ส่วนปริญญาตรี (Bachelor’s Degree) เรียน 4 ปี สะสม 120 หน่วยกิต'
+  },
+  unit6: {
+    q: 'Marie Curie และ Pierre Curie สกัดแร่ Pitchblende หลายตันจนค้นพบ 2 ธาตุกัมมันตรังสีใด?',
+    choices: [
+      'Uranium และ Plutonium',
+      'Polonium และ Radium',
+      'Radium และ Cobalt',
+      'Thorium และ Lead'
+    ],
+    answer: 1,
+    explanation: 'Marie Curie ค้นพบธาตุ Polonium (ตั้งชื่อเป็นเกียรติแก่โปแลนด์บ้านเกิด) และธาตุ Radium ในปี 1898'
+  },
+  unit7: {
+    q: 'ตามบทความ Activity 29 คำว่า "disrupted" มีความหมายตรงกับคำใดมากที่สุด?',
+    choices: [
+      'improved greatly (พัฒนาขึ้น)',
+      'upset or interrupted (ทำให้สะดุด/เสียระบบ)',
+      'celebrated widely (เฉลิมฉลอง)',
+      'delayed indefinitely (เลื่อนไม่มีกำหนด)'
+    ],
+    answer: 1,
+    explanation: 'คำว่า disrupted ในบทความหมายถึง การทำให้วิถีชีวิตดั้งเดิมของช่างฝีมือสะดุดหรือพังทลายลง (upset or interrupted)'
+  },
+  unit8: {
+    q: 'ตามกฎไวยากรณ์ TOEIC ข้อใดใช้คำเชื่อม "Despite" ได้ถูกต้องตามหลักแกรมม่า?',
+    choices: [
+      'Despite it was raining heavily, we went out.',
+      'Despite the severe traffic delay, he arrived on time.',
+      'Despite of the problem, they succeeded.',
+      'Despite he worked hard, he was dismissed.'
+    ],
+    answer: 1,
+    explanation: 'Despite ต้องตามหลังด้วย Noun Phrase เสมอ (ห้ามตามด้วยประโยค S+V และห้ามมี of) ข้อ 2 ตามด้วย "the severe traffic delay" จึงถูกต้องสมบูรณ์'
+  }
+};
+
+export default function LessonsTab({ 
+  onStartUnitQuiz, 
+  speakText, 
+  initialUnit = 'unit5',
+  soundEnabled = true,
+  onAddXp
+}) {
   const [selectedUnit, setSelectedUnit] = useState(initialUnit);
+  const [checkpointAnswers, setCheckpointAnswers] = useState({});
 
   React.useEffect(() => {
     if (initialUnit) {
@@ -52,15 +111,122 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
     { title: "6. Third Conditional", formula: "If + had + V.3, S + would have + V.3", ex: "If they had dispatched the parts, the issue would have been resolved." },
   ];
 
+  const handleAnswerCheckpoint = (unitKey, choiceIdx) => {
+    if (checkpointAnswers[unitKey] !== undefined) return;
+    const cp = UNIT_CHECKPOINTS[unitKey];
+    setCheckpointAnswers(prev => ({ ...prev, [unitKey]: choiceIdx }));
+
+    if (choiceIdx === cp.answer) {
+      soundEffects.playCorrect(soundEnabled);
+      if (onAddXp) onAddXp(25, `ตอบถูกในแบบทดสอบสรุป ${unitKey.toUpperCase()}`);
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.7 }
+      });
+    } else {
+      soundEffects.playWrong(soundEnabled);
+    }
+  };
+
+  const renderCheckpoint = (unitKey, targetQuizUnit) => {
+    const cp = UNIT_CHECKPOINTS[unitKey];
+    const userAns = checkpointAnswers[unitKey];
+    const isAns = userAns !== undefined;
+    const isCor = isAns && userAns === cp.answer;
+
+    return (
+      <div className="bg-slate-50 p-5 rounded-2xl border-2 border-dashed border-blue-300 space-y-3.5 mt-5">
+        <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
+          <div className="flex items-center gap-2">
+            <span className="p-1 rounded-lg bg-amber-400 text-slate-950 font-black">
+              <Zap className="w-3.5 h-3.5 fill-current" />
+            </span>
+            <strong className="text-xs font-black text-slate-900">
+              ⚡ เช็คความเข้าใจประจำบทเรียน (Quick Checkpoint)
+            </strong>
+          </div>
+          <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+            +25 XP
+          </span>
+        </div>
+
+        <p className="text-xs font-bold text-slate-800 leading-snug">
+          {cp.q}
+        </p>
+
+        <div className="grid sm:grid-cols-2 gap-2 text-xs">
+          {cp.choices.map((c, idx) => {
+            const isSelected = userAns === idx;
+            const showCorrect = isAns && idx === cp.answer;
+            const showWrong = isAns && isSelected && idx !== cp.answer;
+
+            return (
+              <button
+                key={idx}
+                onClick={() => handleAnswerCheckpoint(unitKey, idx)}
+                disabled={isAns}
+                className={`p-3 rounded-xl border text-left font-semibold transition flex items-start gap-2 ${
+                  showCorrect
+                    ? 'bg-emerald-50 text-emerald-950 border-emerald-500 font-bold ring-1 ring-emerald-300'
+                    : showWrong
+                      ? 'bg-rose-50 text-rose-950 border-rose-500 font-bold'
+                      : isSelected
+                        ? 'bg-blue-50 text-blue-900 border-blue-400'
+                        : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                }`}
+              >
+                <span className={`w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 border ${
+                  showCorrect
+                    ? 'bg-emerald-600 text-white border-emerald-600'
+                    : showWrong
+                      ? 'bg-rose-600 text-white border-rose-600'
+                      : 'bg-slate-100 text-slate-600 border-slate-300'
+                }`}>
+                  {String.fromCharCode(65 + idx)}
+                </span>
+                <span className="pt-0.5 leading-snug">{c}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {isAns && (
+          <div className={`p-3 rounded-xl text-xs space-y-1 animate-fadeIn border ${
+            isCor ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'
+          }`}>
+            <div className="flex items-center gap-1 font-bold">
+              {isCor ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-rose-600" />}
+              <span>{isCor ? 'ยอดเยี่ยม! ตอบถูกต้อง (+25 XP)' : `ยังไม่ถูก คำตอบที่ถูกคือข้อ ${String.fromCharCode(65 + cp.answer)}`}</span>
+            </div>
+            <p className="text-[11px] text-slate-600 leading-relaxed font-sarabun">
+              <strong>คำอธิบาย:</strong> {cp.explanation}
+            </p>
+          </div>
+        )}
+
+        <div className="pt-2 flex justify-end">
+          <button
+            onClick={() => onStartUnitQuiz(targetQuizUnit)}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition shadow-xs"
+          >
+            <span>ทำข้อสอบจำลอง {targetQuizUnit} (20 ข้อ)</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
       {/* Course Unit Selector Sub-Nav */}
-      <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
         <div className="text-xs font-bold text-slate-500 mb-2 px-2 flex items-center justify-between">
           <span>เลือกบทเรียนที่ต้องการศึกษา (Units 5–8):</span>
           <span className="text-[11px] text-blue-600 font-semibold">สรุปกระชับ ตรงจุดข้อสอบ 100%</span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           {units.map((u) => {
             const Icon = u.icon;
             const isSelected = selectedUnit === u.id;
@@ -68,7 +234,7 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
               <button
                 key={u.id}
                 onClick={() => setSelectedUnit(u.id)}
-                className={`p-3 rounded-xl border text-left transition flex flex-col justify-between space-y-1.5 ${
+                className={`p-3.5 rounded-xl border text-left transition flex flex-col justify-between space-y-1.5 ${
                   isSelected 
                     ? 'bg-blue-600 text-white border-blue-600 shadow-md font-bold' 
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
@@ -101,71 +267,54 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
                 <GraduationCap className="w-6 h-6 text-blue-600" />
                 <span>Unit 5: Study Opportunities (แนวข้อสอบ ข้อ 1–20)</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-1">ความพร้อมการศึกษาต่อ, ระดับปริญญาตรี-โท-เอก, ตำแหน่งวิชาการ, และกฎไวยากรณ์</p>
+              <p className="text-xs text-slate-500 mt-1">สรุประดับปริญญา, การเขียนตัวพิมพ์เล็ก-ใหญ่, ตำแหน่งอาจารย์ และเกณฑ์ค่าธรรมเนียม</p>
             </div>
-
             <button
               onClick={() => onStartUnitQuiz('Unit 5')}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5 shrink-0"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition self-start sm:self-auto shadow-xs"
             >
-              <span>ทำข้อสอบ Unit 5 (Q1–20)</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>ทำข้อสอบ Unit 5</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* 3 Degree Levels Grid */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>ระดับการศึกษาและคุณวุฒิปริญญา (Degrees & Qualifications)</span>
+          {/* 4 Degree Levels Comparison Grid */}
+          <div>
+            <h3 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>1. ลำดับขั้นของปริญญาในระบบอุดมศึกษา (Degree Levels Hierarchy)</span>
             </h3>
-
-            <div className="grid md:grid-cols-3 gap-4 text-xs">
-              <div className="bg-blue-50/70 p-4 rounded-2xl border border-blue-200/80 space-y-2">
-                <div className="flex items-center justify-between font-bold text-blue-900 text-sm">
-                  <span>1. Bachelor’s Degree (ป.ตรี)</span>
-                  <span className="text-[10px] bg-blue-200/60 px-2 py-0.5 rounded-full">3–4 ปี</span>
-                </div>
-                <ul className="text-slate-700 space-y-1.5 leading-relaxed">
-                  <li>• เป็นระดับ <strong>Undergraduate</strong> (วุฒิขั้นแรกหลังจบ ม.ปลาย)</li>
-                  <li>• <strong>BA (Bachelor of Arts):</strong> มนุษยศาสตร์, สังคมศาสตร์, ภาษา, ศิลปะ</li>
-                  <li>• <strong>BSc (Bachelor of Science):</strong> วิทย์, เทคโนโลยี, วิศวะ, คอมพิวเตอร์</li>
-                  <li>• ตัวอย่าง: <em>"I want to pursue a bachelor’s degree in computer science."</em></li>
-                </ul>
+            <div className="grid md:grid-cols-4 gap-3 text-xs">
+              <div className="bg-blue-50/70 p-4 rounded-2xl border border-blue-200 space-y-2">
+                <span className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ระดับที่ 1</span>
+                <h4 className="font-bold text-blue-950 text-sm">Associate Degree</h4>
+                <p className="text-slate-600 leading-relaxed">• อนุปริญญา / ปวส.<br />• ระยะเวลา 2 ปี<br />• สะสมประมาณ <strong>60 หน่วยกิต</strong></p>
               </div>
 
-              <div className="bg-indigo-50/70 p-4 rounded-2xl border border-indigo-200/80 space-y-2">
-                <div className="flex items-center justify-between font-bold text-indigo-900 text-sm">
-                  <span>2. Master’s Degree (ป.โท)</span>
-                  <span className="text-[10px] bg-indigo-200/60 px-2 py-0.5 rounded-full">1–3 ปี</span>
-                </div>
-                <ul className="text-slate-700 space-y-1.5 leading-relaxed">
-                  <li>• ระดับ <strong>Postgraduate / Graduate</strong> (เรียนต่อหลังจบ ป.ตรี)</li>
-                  <li>• ต้องส่ง Independent Study หรือวิทยานิพนธ์ (<strong>Thesis</strong>)</li>
-                  <li>• เช่น <strong>MA</strong> (Master of Arts), <strong>MSc</strong> (Master of Science)</li>
-                  <li>• ตัวอย่าง: <em>"She completed her master's degree in engineering."</em></li>
-                </ul>
+              <div className="bg-indigo-50/70 p-4 rounded-2xl border border-indigo-200 space-y-2">
+                <span className="bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ระดับที่ 2</span>
+                <h4 className="font-bold text-indigo-950 text-sm">Bachelor's Degree</h4>
+                <p className="text-slate-600 leading-relaxed">• ปริญญาตรี (Undergraduate)<br />• ระยะเวลา 4 ปี<br />• สะสมประมาณ <strong>120 หน่วยกิต</strong></p>
               </div>
 
-              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-200/80 space-y-2">
-                <div className="flex items-center justify-between font-bold text-purple-900 text-sm">
-                  <span>3. PhD / Doctoral (ป.เอก)</span>
-                  <span className="text-[10px] bg-purple-200/60 px-2 py-0.5 rounded-full">3.5–6 ปี</span>
-                </div>
-                <ul className="text-slate-700 space-y-1.5 leading-relaxed">
-                  <li>• ระดับสูงสุดของ <strong>Postgraduate</strong> (เน้นการวิจัยค้นพบใหม่)</li>
-                  <li>• ต้องส่ง <strong>Doctoral thesis หรือ Dissertation</strong></li>
-                  <li>• ผู้สำเร็จการศึกษามีสิทธิ์ใช้คำนำหน้านามว่า <strong>Dr.</strong></li>
-                  <li>• ตัวอย่าง: <em>"He earned a PhD in Mental Healthcare."</em></li>
-                </ul>
+              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-200 space-y-2">
+                <span className="bg-purple-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ระดับที่ 3</span>
+                <h4 className="font-bold text-purple-950 text-sm">Master's Degree</h4>
+                <p className="text-slate-600 leading-relaxed">• ปริญญาโท (Graduate)<br />• ระยะเวลา 1–2 ปี<br />• เน้นการวิจัยเฉพาะทาง (Thesis)</p>
+              </div>
+
+              <div className="bg-amber-50/70 p-4 rounded-2xl border border-amber-200 space-y-2">
+                <span className="bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ระดับสูงสุด</span>
+                <h4 className="font-bold text-amber-950 text-sm">Doctoral (Ph.D.)</h4>
+                <p className="text-slate-600 leading-relaxed">• ปริญญาเอก (Terminal degree)<br />• ระยะเวลา 3–5 ปี<br />• ทำดุษฎีนิพนธ์ (Dissertation)</p>
               </div>
             </div>
           </div>
 
-          {/* Grammar & Academic Hierarchy */}
+          {/* Grammar & Terminology Cards */}
           <div className="grid md:grid-cols-2 gap-4 text-xs">
-            <div className="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-2">
-              <div className="flex items-center gap-1.5 font-bold text-amber-900 text-sm">
+            <div className="bg-amber-50/70 p-4 rounded-2xl border border-amber-300 space-y-2">
+              <div className="flex items-center gap-1.5 font-bold text-amber-950 text-sm">
                 <AlertCircle className="w-4 h-4 text-amber-600" />
                 <span>จุดเน้นข้อสอบ: กฎตัวพิมพ์เล็ก-พิมพ์ใหญ่ (Capitalization Rule)</span>
               </div>
@@ -196,6 +345,9 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
               </div>
             </div>
           </div>
+
+          {/* Unit 5 Checkpoint */}
+          {renderCheckpoint('unit5', 'Unit 5')}
         </div>
       )}
 
@@ -209,64 +361,59 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
                 <BookOpen className="w-6 h-6 text-indigo-600" />
                 <span>Unit 6: English Proficiency Test: IELTS (แนวข้อสอบ ข้อ 21–40)</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-1">สรุปครบ 4 ทักษะ: Reading (Marie Curie & Invention), Listening (BuildRight & 6 ตำแหน่ง), Speaking (Dharampur), Writing (Brick Process)</p>
+              <p className="text-xs text-slate-500 mt-1">สรุปประวัติ Marie Curie, 6 ตำแหน่งงานก่อสร้าง, และคำศัพท์สำคัญในพาร์ทต่างๆ</p>
             </div>
-
             <button
               onClick={() => onStartUnitQuiz('Unit 6')}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5 shrink-0"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition self-start sm:self-auto shadow-xs"
             >
-              <span>ทำข้อสอบ Unit 6 (Q21–40)</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>ทำข้อสอบ Unit 6</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Reading Breakdown */}
-          <div className="grid md:grid-cols-2 gap-4 text-xs">
-            <div className="bg-indigo-50/60 p-4 rounded-2xl border border-indigo-200 space-y-2">
-              <strong className="text-indigo-900 font-bold text-sm block">1. The Life and Work of Marie Curie</strong>
-              <ul className="text-slate-700 space-y-1.5 leading-relaxed">
-                <li>• สตรีคนแรกที่ได้โนเบล และได้โนเบล 2 ครั้ง: ฟิสิกส์ 1903 (ร่วมกับสามี Pierre และ Becquerel) และเคมี 1911 (<strong>sole winner</strong> ได้คนเดียว)</li>
-                <li>• วัยเด็กมีความจำเป็นเลิศ (<strong>prodigious memory</strong>) ได้เหรียญทองตอนอายุ 16</li>
-                <li>• ทำงานเป็นครูเพื่อส่งเสียพี่สาว (Bronia) เรียนแพทย์ และต่อมาพี่สาวรักษาสัญญาช่วยส่งเสียให้ Marie เรียนที่ <strong>Sorbonne</strong></li>
-                <li>• <em>TRUE/FALSE/NOT GIVEN:</em> สามีได้โนเบลทั้ง 2 ครั้ง = FALSE, สนใจวิทย์แต่เด็ก = NOT GIVEN</li>
-              </ul>
-            </div>
-
-            <div className="bg-indigo-50/60 p-4 rounded-2xl border border-indigo-200 space-y-2">
-              <strong className="text-indigo-900 font-bold text-sm block">2. The Marvellous Invention (Language)</strong>
-              <ul className="text-slate-700 space-y-1.5 leading-relaxed">
-                <li>• ภาษาเป็นรากฐานของความสำเร็จมนุษย์เหนือสัตว์อื่น</li>
-                <li>• เป็นระบบที่ประณีตสูง (<strong>sophisticated system</strong>) ใช้เสียงพื้นฐานเพียง 25–30 เสียงสร้างการแสดงออกไม่รู้จบ</li>
-                <li>• <strong>Paradox (ความขัดแย้งในตัวเอง):</strong> เรายกย่องภาษาว่าเป็นสิ่งประดิษฐ์ยิ่งใหญ่ที่สุดของมนุษย์ แต่ความจริงไม่เคยมีใครจงใจประดิษฐ์ขึ้นมาเลย (never deliberately invented)</li>
-              </ul>
+          {/* Marie Curie Breakdown Box */}
+          <div className="bg-indigo-50/60 p-5 rounded-2xl border border-indigo-200 space-y-3">
+            <h3 className="font-bold text-indigo-950 text-sm flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-indigo-600" />
+              <span>6.1 เจาะลึกบทความประวัติ Marie Curie (หัวใจของ Reading ข้อ 21–25)</span>
+            </h3>
+            <div className="grid md:grid-cols-3 gap-3 text-xs">
+              <div className="bg-white p-3.5 rounded-xl border border-indigo-100 space-y-1.5">
+                <strong className="text-indigo-900 font-bold block">1. ชีวิตช่วงต้น & การต่อสู้</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  เกิดที่วอร์ซอ โปแลนด์ ผู้หญิงถูกห้ามเรียนมหาวิทยาลัย จึงแอบเรียนที่ <strong>Floating University</strong> ลับๆ และทำงานเป็นครูพี่เลี้ยง (governess) ส่งพี่สาวเรียนแพทย์ก่อน
+                </p>
+              </div>
+              <div className="bg-white p-3.5 rounded-xl border border-indigo-100 space-y-1.5">
+                <strong className="text-indigo-900 font-bold block">2. การศึกษา & การค้นพบ</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  จบเกียรตินิยมอันดับ 1 ฟิสิกส์ ม.ซอร์บอนน์ สกัดแร่ pitchblende หลายตัน จนค้นพบ 2 ธาตุใหม่คือ <strong>Polonium</strong> (ตั้งชื่อตามโปแลนด์) และ <strong>Radium</strong>
+                </p>
+              </div>
+              <div className="bg-white p-3.5 rounded-xl border border-indigo-100 space-y-1.5">
+                <strong className="text-indigo-900 font-bold block">3. เกียรติยศ & การอุทิศตน</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  ได้รางวัลโนเบล 2 ครั้ง (ฟิสิกส์ 1903 ร่วมกับสามี, เคมี 1911 เดี่ยว) ในสงครามโลกครั้งที่ 1 อุทิศรถเอกซเรย์ <strong>Petite Curies</strong> ช่วยทหารกว่าล้านคน
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Listening & 6 Jobs */}
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs space-y-3">
-            <div className="flex items-center justify-between">
-              <strong className="text-slate-900 font-bold text-sm flex items-center gap-1.5">
-                <Headphones className="w-4 h-4 text-indigo-600" />
-                <span>6.2 Listening: BuildRight Recruitment & 6 Job Openings</span>
-              </strong>
-              <button
-                onClick={() => speakText("Hello, everyone. My name is Alex Johnson and I’m a recruitment consultant at BuildRight Recruitment. We’re an agency that specializes in providing staff for the construction industry.", "en-GB")}
-                className="text-xs bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1 transition"
-              >
-                <Volume2 className="w-3.5 h-3.5" />
-                <span>ฟังเสียง Alex Johnson</span>
-              </button>
-            </div>
-            <p className="text-slate-600 leading-relaxed">
-              <strong>Alex Johnson</strong> บรรยายว่าอาคารประหยัดพลังงาน (energy efficient materials) และกรีนเทคโนโลยีกำลังเป็นที่ต้องการสูงมาก รวมถึงการลงทุนโครงสร้างพื้นฐาน (infrastructure: roads, bridges, rail) ของรัฐบาล
-            </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          {/* 6 Construction Jobs Breakdown */}
+          <div>
+            <h3 className="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+              <Briefcase className="w-4 h-4 text-blue-600" />
+              <span>6.2 ตารางสรุป 6 ตำแหน่งงาน BuildRight Recruitment (Listening ข้อ 26–30)</span>
+            </h3>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
               {jobs.map((job, idx) => (
-                <div key={idx} className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
+                <div key={idx} className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <strong className="text-indigo-950 font-bold">{job.title}</strong>
-                    <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">{job.type}</span>
+                    <span className="font-bold text-slate-900">{job.title}</span>
+                    <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                      {job.type}
+                    </span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed">{job.req}</p>
                 </div>
@@ -293,10 +440,13 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
                 <span>6.4 IELTS Writing: Brick Process & Task 2</span>
               </strong>
               <p className="text-slate-700 leading-relaxed">
-                • <strong>Brick Making 7 ขั้นตอน:</strong> 1) ขุดดิน (clay) → 2) บดผ่าน metal grid & roller → 3) ผสมทราย+น้ำ → 4) ขึ้นรูปด้วย mold/cutter → 5) อบแห้ง 24–48 ชม. → 6) เผาในเตา kiln 200°C–1300°C พักห้องเย็น 2–3 วัน → 7) บรรจุจัดส่ง
+                • <strong>Task 1 กระบวนการทำอิฐ:</strong> ขุดดินเหนียว (Clay digger) → ผ่านตะแกรง (Metal grid) → ผสมทรายและน้ำ → ใส่แม่พิมพ์หรือใช้ลวดตัด (Wire cutter) → อบแห้ง 24–48 ชม. → เผาในเตา Kiln (ร้อนปานกลางถึงร้อนจัด) → เข้าห้องหล่อเย็น (Cooling chamber) → บรรจุและจัดส่ง
               </p>
             </div>
           </div>
+
+          {/* Unit 6 Checkpoint */}
+          {renderCheckpoint('unit6', 'Unit 6')}
         </div>
       )}
 
@@ -310,23 +460,26 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
                 <ShieldCheck className="w-6 h-6 text-purple-600" />
                 <span>Unit 7: English Proficiency Test: TOEFL (แนวข้อสอบ ข้อ 41–60)</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-1">สรุปเข้ม: Reading (ช่างฝีมือกับระบบโรงงาน), Listening (Work-Study กู้ยืมเรียน & Shakespeare), Speaking (ประติมากรรม & นิยามเครื่องมือ)</p>
+              <p className="text-xs text-slate-500 mt-1">สรุปบทความช่างฝีมือ vs เครื่องจักร, โครงการ Work-Study, และข้อสอบนิยามเครื่องมือของสัตว์</p>
             </div>
-
             <button
               onClick={() => onStartUnitQuiz('Unit 7')}
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5 shrink-0"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition self-start sm:self-auto shadow-xs"
             >
-              <span>ทำข้อสอบ Unit 7 (Q41–60)</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>ทำข้อสอบ Unit 7</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="bg-purple-50/60 p-4 rounded-2xl border border-purple-200 text-xs space-y-2">
-            <strong className="text-purple-900 font-bold text-sm block">7.1 TOEFL Reading: Craftsmen vs Industrialization (Activity 29)</strong>
-            <p className="text-slate-700 leading-relaxed">
-              • <strong>ก่อนปี 1815:</strong> สินค้าทำมือโดยครูช่าง (master artisans), ช่างฝีมือ (journeymen) และเด็กฝึกงาน (apprentices) เน้นคุณภาพ ครูช่างดูแลทั้งวิชาชีพ การศึกษา และศีลธรรม (moral conduct)<br />
-              • <strong>หลังปี 1815:</strong> โรงงานใช้เครื่องจักร เน้นความเร็วและผลผลิต คนงานสูญเสียอิสรภาพ ต้องเชื่อฟังเสียงระฆังโรงงาน (ding-dong of the bell) เหมือนเครื่องจักรมีชีวิต (living machines)<br />
+          {/* Reading Summary: Artisans to Industrialization */}
+          <div className="bg-purple-50/70 p-5 rounded-2xl border border-purple-200 space-y-3">
+            <h3 className="font-bold text-purple-950 text-sm flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-purple-600" />
+              <span>7.1 Reading Activity 29: From Artisans to Industrial Workers</span>
+            </h3>
+            <p className="text-xs text-slate-700 leading-relaxed">
+              • <strong>ยุคก่อนอุตสาหกรรม (Pre-industrial):</strong> ช่างฝีมือ (Artisans) ผลิตสินค้าชิ้นเอกตั้งแต่ต้นจนจบ มีความภาคภูมิใจ มีอิสระในการกำหนดเวลาทำงาน<br />
+              • <strong>ยุคอุตสาหกรรม (Industrialization):</strong> โรงงานนำเครื่องจักรไอน้ำมาใช้ แบ่งงานออกเป็นขั้นตอนซอยย่อย (Division of labor) แรงงานกลายเป็นผู้คุมเครื่องจักรที่ทำงานซ้ำซาก ขาดความอิสระ สูญเสีย <strong>pride of craftsmanship</strong> และถูกเปรียบเปรยว่าเป็น "Living Machines"<br />
               • <strong>คำศัพท์ออกบ่อย:</strong> <strong>disrupted</strong> = <em>upset / interrupted</em> (ทำให้ระบบสะดุดหรือเสียระเบียบ)
             </p>
           </div>
@@ -348,6 +501,9 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
               </p>
             </div>
           </div>
+
+          {/* Unit 7 Checkpoint */}
+          {renderCheckpoint('unit7', 'Unit 7')}
         </div>
       )}
 
@@ -363,30 +519,31 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
               </h2>
               <p className="text-xs text-slate-500 mt-1">สรุปเข้มไวยากรณ์ยอดฮิต Part 5, คำศัพท์ธุรกิจ, และตัวย่อในอีเมลการทำงาน</p>
             </div>
-
             <button
               onClick={() => onStartUnitQuiz('Unit 8')}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5 shrink-0"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition self-start sm:self-auto shadow-xs"
             >
-              <span>ทำข้อสอบ Unit 8 (Q61–80)</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>ทำข้อสอบ Unit 8</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Grammar Formulas */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <FileCode2 className="w-4 h-4 text-emerald-600" />
-              <span>สูตรไวยากรณ์ออกสอบบ่อย TOEIC Part 5</span>
+          {/* 6 Essential Grammar Formulas */}
+          <div>
+            <h3 className="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-600" />
+              <span>8.1 สูตรไวยากรณ์ออกสอบบ่อยที่สุด 6 กฎหลัก (TOEIC Grammar Hacks)</span>
             </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
               {grammarRules.map((rule, idx) => (
-                <div key={idx} className="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-200/80 space-y-1">
-                  <strong className="text-emerald-950 font-bold block">{rule.title}</strong>
-                  <p className="font-mono text-[11px] bg-white/80 p-1.5 rounded-lg border border-emerald-200/60 text-emerald-900">
+                <div key={idx} className="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200 space-y-1.5">
+                  <h4 className="font-bold text-emerald-950 text-sm">{rule.title}</h4>
+                  <div className="bg-white/80 p-2 rounded-xl border border-emerald-300 font-mono text-[11px] text-emerald-900 font-semibold">
                     {rule.formula}
+                  </div>
+                  <p className="text-slate-600 text-[11px] leading-relaxed italic">
+                    Ex: "{rule.ex}"
                   </p>
-                  <p className="text-[11px] text-slate-600 italic font-inter pt-0.5">Ex: "{rule.ex}"</p>
                 </div>
               ))}
             </div>
@@ -415,6 +572,9 @@ export default function LessonsTab({ onStartUnitQuiz, speakText, initialUnit = '
               </ul>
             </div>
           </div>
+
+          {/* Unit 8 Checkpoint */}
+          {renderCheckpoint('unit8', 'Unit 8')}
         </div>
       )}
     </div>

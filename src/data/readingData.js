@@ -615,4 +615,647 @@ export const readingPassages = [
       }
     ]
   }
+,
+{
+  "id": "test2-act1",
+  "title": "Test 2 (บ่ายนี้) Activity 1: The Life and Work of Marie Curie",
+  "thaiTitle": "แนวข้อสอบ Test 2 ตอนที่ 1: ชีวประวัติและการทำงานของ มารี กูรี (10 ข้อ)",
+  "unit": "Unit 6",
+  "examType": "Test 2 Exam",
+  "readingTime": "5 นาที",
+  "wordCount": 290,
+  "difficulty": "Exam Level",
+  "summary": "เรื่องราวของ Marie Curie ตั้งแต่วัยเด็ก การทำงานเป็นครูเพื่อส่งเสียพี่สาวเรียนแพทย์ การศึกษาที่ Sorbonne การได้รับรางวัลโนเบล 2 ครั้ง และความทุ่มเทเพื่อการศึกษา",
+  "paragraphs": [
+    {
+      "id": "1",
+      "label": "Paragraph 1",
+      "title": "Background and Nobel Prizes",
+      "text": "Marie Curie is one of the most famous women scientists in history. She was born Maria Sklodowska in Poland in 1867. She became well known for her groundbreaking research on radioactivity and was awarded two Nobel Prizes. In 1903, she shared the Nobel Prize in Physics with her husband, Pierre Curie, and Henri Becquerel. In 1911, she received the Nobel Prize in Chemistry on her own. She was the first woman ever to win a Nobel Prize.",
+      "thai": "มารี กูรี เป็นหนึ่งในนักวิทยาศาสตร์หญิงที่มีชื่อเสียงที่สุดในประวัติศาสตร์ เธอเกิดในชื่อ มาเรีย สโกลดอฟสกา ในโปแลนด์เมื่อปี 1867 เธอมีชื่อเสียงโด่งดังจากงานวิจัยบุกเบิกเรื่องกัมมันตภาพรังสีและได้รับรางวัลโนเบลถึง 2 ครั้ง ในปี 1903 เธอได้รับรางวัลโนเบลสาขาฟิสิกส์ร่วมกับปิแอร์ กูรี สามีของเธอ และอองรี เบกเกอแรล ในปี 1911 เธอได้รับรางวัลโนเบลสาขาเคมีเพียงลำพัง เธอเป็นผู้หญิงคนแรกที่เคยได้รับรางวัลโนเบล",
+      "keyPoints": [
+        "เกิดที่โปแลนด์ ปี 1867 (ชื่อเดิม Maria Sklodowska)",
+        "โด่งดังจากงานวิจัยกัมมันตภาพรังสี (radioactivity)",
+        "รางวัลโนเบล 2 ครั้ง: ฟิสิกส์ 1903 (ร่วม) และเคมี 1911 (เดี่ยว)"
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Paragraph 2",
+      "title": "Early Life and Sacrifice for Sister Bronia",
+      "text": "From an early age, Marie showed remarkable intelligence and an excellent memory. At the age of sixteen, she received a gold medal for completing her secondary education. However, her father lost his savings because of poor investments, so Marie had to work as a teacher. She used the money she earned to support her sister Bronia’s medical studies in Paris. In return, Bronia promised to help Marie pursue her own education later.",
+      "thai": "ตั้งแต่วัยเยาว์ มารีแสดงให้เห็นถึงสติปัญญาอันโดดเด่นน่าประทับใจและความจำเป็นเลิศ เมื่ออายุ 16 ปี เธอได้รับเหรียญทองจากการจบการศึกษาระดับมัธยม อย่างไรก็ตาม บิดาของเธอสูญเสียเงินเก็บไปจากการลงทุนที่ล้มเหลว มารีจึงต้องทำงานเป็นครู เธอใช้เงินที่หามาได้เพื่อส่งเสียค่าเล่าเรียนแพทย์ของบรอนยาพี่สาวของเธอในปารีส เพื่อเป็นการตอบแทน บรอนยาสัญญาว่าจะช่วยสนับสนุนมารีให้ได้เรียนต่อในภายหลัง",
+      "keyPoints": [
+        "remarkable intelligence = สติปัญญาอันยอดเยี่ยมโดดเด่น",
+        "พ่อเสียเงินเก็บจากการลงทุน มารีจึงต้องทำงานเป็นครูเพื่อส่งพี่สาวเรียนแพทย์",
+        "บรอนยาสัญญาว่าจะช่วยส่งมารีเรียนต่อในภายหลัง"
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Paragraph 3",
+      "title": "Studies at the Sorbonne and Meeting Pierre",
+      "text": "In 1891, Bronia kept this promise, and Marie moved to Paris to study at the Sorbonne, now part of the University of Paris. She devoted herself to her studies, often working late into the night. Because she had very little money, she survived on a simple diet of bread, butter, and tea. Despite these difficult living conditions, she performed exceptionally well in her examinations. In 1893, she achieved the highest result in the physical sciences examination. The following year, she came second in the mathematical sciences examination. It was not until the spring of 1894 that she met Pierre Curie, who would later become her husband and research partner.",
+      "thai": "ในปี 1891 บรอนยาได้รักษาสัญญานี้ และมารีได้ย้ายไปปารีสเพื่อศึกษาที่มหาวิทยาลัยซอร์บอนน์ ซึ่งปัจจุบันเป็นส่วนหนึ่งของมหาวิทยาลัยปารีส เธอทุ่มเทให้กับการเรียน โดยมักจะทำงานและอ่านหนังสือดึกดื่นจนถึงค่อนคืน เนื่องจากเธอมีเงินน้อยมาก เธอจึงประทังชีวิตด้วยอาหารเรียบง่ายเพียงขนมปัง เนย และชา แม้จะมีสภาพความเป็นอยู่ที่ยากลำบาก เธอก็ทำข้อสอบได้ยอดเยี่ยมเป็นพิเศษ ในปี 1893 เธอสอบได้คะแนนสูงสุดในการสอบสาขาวิทยาศาสตร์กายภาพ ในปีถัดมา เธอสอบได้อันดับสองในการสอบสาขาวิทยาศาสตร์คณิตศาสตร์ จนกระทั่งในฤดูใบไม้ผลิปี 1894 เธอได้พบกับปิแอร์ กูรี ซึ่งต่อมากลายเป็นสามีและคู่หูวิจัยของเธอ",
+      "keyPoints": [
+        "ปี 1891 ย้ายไปเรียนที่ Sorbonne ในปารีส",
+        "devoted herself to studies = ทุ่มเทให้กับการเรียนอย่างยิ่ง",
+        "ปี 1893 ได้คะแนนสูงสุดฟิสิกส์ และปี 1894 ได้อันดับสองคณิตศาสตร์",
+        "พบกับ Pierre Curie ในฤดูใบไม้ผลิปี 1894"
+      ]
+    }
+  ],
+  "vocabGlossary": [
+    {
+      "word": "remarkable",
+      "pos": "adjective",
+      "thai": "โดดเด่น, น่าประทับใจ, ยอดเยี่ยม (= impressive)",
+      "context": "Showed remarkable intelligence and an excellent memory."
+    },
+    {
+      "word": "groundbreaking",
+      "pos": "adjective",
+      "thai": "ซึ่งบุกเบิก, นวัตกรรมใหม่ที่ไม่เคยมีมาก่อน",
+      "context": "Her groundbreaking research on radioactivity."
+    },
+    {
+      "word": "devoted",
+      "pos": "verb/adj",
+      "thai": "ทุ่มเท, อุทิศตนอย่างเต็มที่ (= dedicated)",
+      "context": "She devoted herself to her studies, often working late into the night."
+    },
+    {
+      "word": "exceptionally",
+      "pos": "adverb",
+      "thai": "อย่างยอดเยี่ยมเป็นพิเศษ",
+      "context": "She performed exceptionally well in her examinations."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "1. What is Marie Curie famous for?",
+      "choices": [
+        "A. Discovering gravity",
+        "B. Her research on radioactivity",
+        "C. Inventing the telephone",
+        "D. Studying human anatomy"
+      ],
+      "answer": 1,
+      "paragraphRef": "1",
+      "explanation": "ย่อหน้า 1 ระบุชัดเจน: \"She became well known for her groundbreaking research on radioactivity...\" (มีชื่อเสียงจากงานวิจัยด้านกัมมันตภาพรังสี)"
+    },
+    {
+      "id": 2,
+      "question": "2. How many Nobel Prizes did Marie Curie receive?",
+      "choices": [
+        "A. One",
+        "B. Two",
+        "C. Three",
+        "D. Four"
+      ],
+      "answer": 1,
+      "paragraphRef": "1",
+      "explanation": "ย่อหน้า 1 ระบุ: \"...and was awarded two Nobel Prizes\" (ปี 1903 สาขาฟิสิกส์ร่วม และปี 1911 สาขาเคมีเดี่ยว)"
+    },
+    {
+      "id": 3,
+      "question": "3. Why did Marie have to work as a teacher?",
+      "choices": [
+        "A. She disliked science",
+        "B. She wanted to travel",
+        "C. Her father lost his savings",
+        "D. Her sister asked her to work"
+      ],
+      "answer": 2,
+      "paragraphRef": "2",
+      "explanation": "ย่อหน้า 2 ระบุ: \"However, her father lost his savings because of poor investments, so Marie had to work as a teacher.\""
+    },
+    {
+      "id": 4,
+      "question": "4. How did Marie help her sister Bronia?",
+      "choices": [
+        "A. She paid for her medical studies",
+        "B. She found her a job in Poland",
+        "C. She taught her mathematics",
+        "D. She gave her a house in Paris"
+      ],
+      "answer": 0,
+      "paragraphRef": "2",
+      "explanation": "ย่อหน้า 2 ระบุ: \"She used the money she earned to support her sister Bronia’s medical studies in Paris.\" (หาเงินส่งเสียค่าเรียนแพทย์ให้พี่สาว)"
+    },
+    {
+      "id": 5,
+      "question": "5. Where did Marie go to study in 1891?",
+      "choices": [
+        "A. Oxford University",
+        "B. The University of Warsaw",
+        "C. The Sorbonne in Paris",
+        "D. Cambridge University"
+      ],
+      "answer": 2,
+      "paragraphRef": "3",
+      "explanation": "ย่อหน้า 3 ระบุ: \"In 1891, Bronia kept this promise, and Marie moved to Paris to study at the Sorbonne, now part of the University of Paris.\""
+    },
+    {
+      "id": 6,
+      "question": "6. What does the passage suggest about Marie’s character?",
+      "choices": [
+        "A. She was lazy and careless",
+        "B. She was determined and hardworking",
+        "C. She was wealthy and privileged",
+        "D. She was uninterested in education"
+      ],
+      "answer": 1,
+      "paragraphRef": "2, 3",
+      "explanation": "ตลอดทั้งบทความสะท้อนว่าเธอเป็นคนมุ่งมั่นเด็ดเดี่ยวและขยันขันแข็ง (determined and hardworking) ทั้งทำงานหาเงินช่วยพี่สาว และอ่านหนังสือจนดึกท่ามกลางความยากจน"
+    },
+    {
+      "id": 7,
+      "question": "7. In which year did Marie Curie win the Nobel Prize in Chemistry?",
+      "choices": [
+        "A. 1893",
+        "B. 1903",
+        "C. 1911",
+        "D. 1891"
+      ],
+      "answer": 2,
+      "paragraphRef": "1",
+      "explanation": "ย่อหน้า 1 ระบุ: \"In 1911, she received the Nobel Prize in Chemistry on her own.\" (ส่วนปี 1903 ได้สาขาฟิสิกส์)"
+    },
+    {
+      "id": 8,
+      "question": "8. What does the word “remarkable” in paragraph 2 mean?",
+      "choices": [
+        "A. Ordinary",
+        "B. Impressive",
+        "C. Unusual in a negative way",
+        "D. Unimportant"
+      ],
+      "answer": 1,
+      "paragraphRef": "2",
+      "explanation": "คำว่า \"remarkable\" หมายถึง โดดเด่น น่าทึ่ง น่าประทับใจ ตรงกับ \"Impressive\" (Ordinary = ธรรมดา, Unimportant = ไม่สำคัญ)"
+    },
+    {
+      "id": 9,
+      "question": "9. Why did Marie often work far into the night?",
+      "choices": [
+        "A. She had to earn extra money.",
+        "B. She wanted to meet Pierre Curie.",
+        "C. She was dedicated to her studies.",
+        "D. She could not sleep at night."
+      ],
+      "answer": 2,
+      "paragraphRef": "3",
+      "explanation": "ย่อหน้า 3 ระบุ: \"She devoted herself to her studies, often working late into the night.\" (devoted to = dedicated to อุทิศตนให้กับการเรียน)"
+    },
+    {
+      "id": 10,
+      "question": "10. What can we infer about Marie Curie from her early life?",
+      "choices": [
+        "A. She gave up easily when facing difficulties.",
+        "B. She depended entirely on her family’s wealth.",
+        "C. She valued education and was willing to make sacrifices for it.",
+        "D. She preferred teaching to studying science."
+      ],
+      "answer": 2,
+      "paragraphRef": "2, 3",
+      "explanation": "อนุมานได้ว่าเธอให้คุณค่ากับการศึกษาอย่างยิ่งและพร้อมเสียสละเพื่อการเรียน (valued education and was willing to make sacrifices for it)"
+    }
+  ]
+},
+{
+  "id": "test2-act2",
+  "title": "Test 2 (บ่ายนี้) Activity 2: Student Work-Study Program Meeting (True/False 10 ข้อ)",
+  "thaiTitle": "แนวข้อสอบ Test 2 ตอนที่ 2: โครงการ Work-Study กู้ยืมเรียนกับ Mr. Dan (10 ข้อ)",
+  "unit": "Unit 7",
+  "examType": "Test 2 Exam",
+  "readingTime": "4 นาที",
+  "wordCount": 220,
+  "difficulty": "Exam Level",
+  "summary": "สถานการณ์นักศึกษาเข้าพบนาย Dan เพื่อขอเข้าร่วมโครงการ Work-Study หาเงินจ่ายหนี้กู้ยืมเรียน โดยนาย Dan แนะนำให้เริ่มที่ 10 ชั่วโมง/สัปดาห์ เพื่อไม่ให้กระทบเกรดและทุนการศึกษา",
+  "paragraphs": [
+    {
+      "id": "situation",
+      "label": "Situation Background",
+      "title": "Meeting between Student and Advisor Mr. Dan",
+      "text": "A student meets with Mr. Dan to ask about joining the work-study program to earn money and pay off student loans. The student wants to work 20 hours a week, but Mr. Dan advises starting with 10 hours a week because working too much could affect the student’s grades and scholarship. He approves the student to work 10 hours a week and tells them to take the signed form to the job center to find a suitable position. They can discuss increasing the working hours later.\n\n[From Original Audio Transcript]\nStudent: \"Hi, Mr. Dan. If I don't start working towards paying off my student loans now, I'm going to feel really burdened and strapped for cash after graduation... I was hoping to join the work-study program and get a job on campus.\"\nAdvisor: \"You're a smart student... The jobs offered are only part-time, either 10 hours or 20 hours a week. I suggest starting with 10 hours... considering you're a freshman with a full class schedule, it wouldn't be wise to increase workload. If your grades slip up, you might not qualify again next year for your current scholarship.\"\nStudent: \"That would just put me into more debt... Okay, I agree.\"",
+      "thai": "นักศึกษาคนหนึ่งเข้าพบนาย Dan เพื่อสอบถามเกี่ยวกับการเข้าร่วมโครงการ Work-Study เพื่อหารายได้และผ่อนชำระหนี้กู้ยืมเรียน นักศึกษาต้องการทำงาน 20 ชั่วโมงต่อสัปดาห์ แต่นาย Dan แนะนำให้เริ่มต้นที่ 10 ชั่วโมงต่อสัปดาห์ เนื่องจากหากทำงานหนักเกินไปอาจส่งผลกระทบต่อผลการเรียนและทุนการศึกษาของนักศึกษา นาย Dan อนุมัติให้นักศึกษาทำงานได้ 10 ชั่วโมงต่อสัปดาห์ และบอกให้นำแบบฟอร์มที่ลงนามแล้วไปยื่นที่ศูนย์จัดหางาน (job center) เพื่อหาตำแหน่งงานที่เหมาะสม โดยสามารถกลับมาหารือเรื่องการเพิ่มชั่วโมงทำงานได้ในภายหลัง",
+      "keyPoints": [
+        "นักศึกษาต้องการหาเงินผ่อนหนี้กู้ยืมเรียน (student loans) หลังจบ",
+        "นักศึกษาเป็นเด็กปี 1 (freshman) มีตารางเรียนเต็ม",
+        "โครงการมีให้เลือกทั้ง 10 ชม. และ 20 ชม. ต่อสัปดาห์",
+        "นาย Dan อนุมัติ 10 ชม. เพื่อป้องกันไม่ให้กระทบทุนการศึกษา (scholarship)",
+        "ต้องนำแบบฟอร์มไปยื่นที่ job center ไม่ใช่ห้องสมุด"
+      ]
+    }
+  ],
+  "vocabGlossary": [
+    {
+      "word": "work-study program",
+      "pos": "noun phrase",
+      "thai": "โครงการทำงานระหว่างเรียน (เพื่อรับค่าตอบแทนช่วยเหลือค่าเล่าเรียน)",
+      "context": "Joining the work-study program to earn money."
+    },
+    {
+      "word": "student loans",
+      "pos": "noun phrase",
+      "thai": "เงินกู้ยืมเพื่อการศึกษา",
+      "context": "Pay off student loans after graduation."
+    },
+    {
+      "word": "scholarship",
+      "pos": "noun",
+      "thai": "ทุนการศึกษา",
+      "context": "Could put the student's scholarship at risk."
+    },
+    {
+      "word": "job center",
+      "pos": "noun phrase",
+      "thai": "ศูนย์จัดหางานสำหรับนักศึกษา",
+      "context": "Take the signed form to the job center."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "1. The student is concerned about paying off student loans after graduation.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: นักศึกษากังวลเรื่องภาระการผ่อนชำระหนี้กู้ยืมเรียนหลังจบการศึกษา จึงมาขอสมัครทำงาน"
+    },
+    {
+      "id": 2,
+      "question": "2. Mr. Dan immediately approves the student's request to work 20 hours a week.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 1,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ FALSE: ผิด เพราะนาย Dan อนุมัติแค่ 10 ชั่วโมงต่อสัปดาห์ ไม่อนุมัติ 20 ชั่วโมงทันที"
+    },
+    {
+      "id": 3,
+      "question": "3. The student is a freshman with a full class schedule.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: ในบทสนทนาต้นฉบับระบุว่า: \"considering you’re a freshman with a full class schedule\""
+    },
+    {
+      "id": 4,
+      "question": "4. Working too many hours could put the student's scholarship at risk.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: นาย Dan เตือนชัดเจนว่าการทำงานมากเกินไปอาจทำให้เกรดตกและเสี่ยงหลุดทุนการศึกษา"
+    },
+    {
+      "id": 5,
+      "question": "5. The student must take the signed form to the library.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 1,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ FALSE: ผิด เพราะต้องนำแบบฟอร์มไปยื่นที่ \"job center\" (ศูนย์จัดหางาน) ไม่ใช่ library (ห้องสมุด)"
+    },
+    {
+      "id": 6,
+      "question": "6. The work-study program offers both 10-hour and 20-hour work schedules per week.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: โครงการมีตัวเลือกทั้ง 10 ชั่วโมง และ 20 ชั่วโมงต่อสัปดาห์"
+    },
+    {
+      "id": 7,
+      "question": "7. Mr. Dan believes that the student is not a hard worker.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 1,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ FALSE: ผิด นาย Dan ไม่ได้มองว่านักศึกษาไม่ขยัน แต่ชมว่าฉลาดและคิดการณ์ไกล แต่เตือนเพราะห่วงภาระเรียน"
+    },
+    {
+      "id": 8,
+      "question": "8. The student agrees that losing the scholarship could lead to more debt.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: นักศึกษาพูดเองว่า: \"That would just put me into more debt.\" (ถ้าเสียทุนก็ยิ่งเพิ่มหนี้สิน)"
+    },
+    {
+      "id": 9,
+      "question": "9. This is a work-study program provided by a university.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: เป็นโครงการทำงานในมหาวิทยาลัย (campus work-study) สำหรับนักศึกษา"
+    },
+    {
+      "id": 10,
+      "question": "10. Mr. Dan agrees to reconsider the student's working hours after they have worked for a while.",
+      "choices": [
+        "TRUE",
+        "FALSE"
+      ],
+      "answer": 0,
+      "paragraphRef": "situation",
+      "explanation": "ตอบ TRUE: ในข้อความระบุว่า: \"They can discuss increasing the working hours later.\" (สามารถกลับมาคุยเรื่องเพิ่มชั่วโมงได้ในภายหลัง)"
+    }
+  ]
+},
+{
+  "id": "test2-act3",
+  "title": "Test 2 (บ่ายนี้) Activity 3: Street Scene & Cyclists Picture Description (เติมคำ 6 ข้อ)",
+  "thaiTitle": "แนวข้อสอบ Test 2 ตอนที่ 3: บรรยายภาพการจราจรบนถนนเอเชีย (6 ข้อ)",
+  "unit": "Unit 5",
+  "examType": "Test 2 Exam",
+  "readingTime": "3 นาที",
+  "wordCount": 160,
+  "difficulty": "Exam Level",
+  "summary": "ข้อสอบบรรยายภาพสีน้ำถนนที่พลุกพล่านในประเทศแถบเอเชีย มีจักรยานและยานพาหนะสัญจรคับคั่ง เติมคำศัพท์ 6 คำจาก Word Bank ให้ถูกต้องตามหลักไวยากรณ์และบริบท",
+  "paragraphs": [
+    {
+      "id": "pic-desc",
+      "label": "Picture Description Passage",
+      "title": "Crowded Asian Street Scene with Cyclists",
+      "text": "The picture depicts a crowded street in an Asian country, with 1). [numerous] bicycles and motor vehicles sharing the road. This indicates that the area experiences heavy traffic. 2). [Some] cyclists have baskets attached to their bicycles, suggesting that cycling is a common means of 3). [transportation]. However, the traffic situation appears somewhat chaotic. 4). [Cyclists] are riding on both sides of the center line and are moving in the same direction. Moreover, there appear to be no designated lanes for bicycles or motorcycles, because different types of transportation are sharing the road without clear separation. Based on the surrounding architecture, the area may be a popular tourist 5). [destination] or shopping district. Two tall buildings 6). [can be seen] in the distance, suggesting that the area may also be a commercial or business center.",
+      "thai": "ภาพนี้แสดงให้เห็นถึงถนนที่แออัดในประเทศแถบเอเชีย โดยมีจักรยานและยานยนต์จำนวนมาก (numerous) สัญจรใช้ถนนร่วมกัน สิ่งนี้บ่งชี้ว่าพื้นที่นี้มีการจราจรที่หนาแน่น นักปั่นจักรยานบางคน (Some) มีตะกร้าติดอยู่กับจักรยาน ซึ่งชี้ให้เห็นว่าการปั่นจักรยานเป็นรูปแบบการเดินทาง (means of transportation) ทั่วไป อย่างไรก็ตาม สถานการณ์การจราจรดูค่อนข้างสับสนวุ่นวาย นักปั่นจักรยาน (Cyclists) กำลังขี่อยู่ทั้งสองฝั่งของเส้นกึ่งกลางถนนและเคลื่อนที่ไปในทิศทางเดียวกัน นอกจากนี้ ดูเหมือนจะไม่มีเลนเฉพาะสำหรับจักรยานหรือมอเตอร์ไซค์ เนื่องจากยานพาหนะประเภทต่างๆ ใช้ถนนร่วมกันโดยไม่มีการแบ่งแยกอย่างชัดเจน เมื่อพิจารณาจากสถาปัตยกรรมโดยรอบ พื้นที่นี้อาจเป็นจุดหมายปลายทางยอดนิยมของนักท่องเที่ยว (tourist destination) หรือย่านช้อปปิ้ง สามารถมองเห็น (can be seen) ตึกสูงสองหลังอยู่ไกลๆ ซึ่งบ่งชี้ว่าพื้นที่นี้อาจเป็นศูนย์กลางการค้าหรือธุรกิจด้วย",
+      "keyPoints": [
+        "Word Bank: transportation | destination | can be seen | numerous | some | cyclists",
+        "ข้อ 1 เติม: numerous (adj ขยาย bicycles = จำนวนมาก)",
+        "ข้อ 2 เติม: Some (determiner ขึ้นต้นประโยค = นักปั่นบางคนมีตะกร้า)",
+        "ข้อ 3 เติม: transportation (means of transportation = รูปแบบการเดินทาง)",
+        "ข้อ 4 เติม: Cyclists (Subject พหูพจน์ = นักปั่นจักรยาน)",
+        "ข้อ 5 เติม: destination (tourist destination = จุดหมายปลายทางของนักท่องเที่ยว)",
+        "ข้อ 6 เติม: can be seen (passive voice = สามารถมองเห็นได้)"
+      ]
+    }
+  ],
+  "vocabGlossary": [
+    {
+      "word": "means of transportation",
+      "pos": "collocation",
+      "thai": "รูปแบบการเดินทาง / ยานพาหนะ",
+      "context": "Cycling is a common means of transportation."
+    },
+    {
+      "word": "tourist destination",
+      "pos": "collocation",
+      "thai": "จุดหมายปลายทางสำหรับนักท่องเที่ยว",
+      "context": "The area may be a popular tourist destination."
+    },
+    {
+      "word": "numerous",
+      "pos": "adjective",
+      "thai": "จำนวนมากมาย มหาศาล",
+      "context": "With numerous bicycles and motor vehicles."
+    },
+    {
+      "word": "can be seen",
+      "pos": "verb phrase",
+      "thai": "สามารถมองเห็นได้ (รูป Passive)",
+      "context": "Two tall buildings can be seen in the distance."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Blank 1: with ____________ bicycles and motor vehicles sharing the road.",
+      "choices": [
+        "numerous",
+        "destination",
+        "transportation",
+        "some"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ numerous (adj): ขยาย bicycles แปลว่า \"จักรยานจำนวนมาก\""
+    },
+    {
+      "id": 2,
+      "question": "Blank 2: ____________ cyclists have baskets attached to their bicycles...",
+      "choices": [
+        "Some",
+        "Numerous",
+        "Cyclists",
+        "Destination"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ Some: ขึ้นต้นประโยค แปลว่า \"นักปั่นจักรยานบางคนมีตะกร้าหน้ารถ\""
+    },
+    {
+      "id": 3,
+      "question": "Blank 3: ...suggesting that cycling is a common means of ____________.",
+      "choices": [
+        "transportation",
+        "destination",
+        "cyclists",
+        "numerous"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ transportation: คำคู่กับ means of transportation แปลว่า \"รูปแบบการเดินทาง/การคมนาคมขนส่ง\""
+    },
+    {
+      "id": 4,
+      "question": "Blank 4: ____________ are riding on both sides of the center line...",
+      "choices": [
+        "Cyclists",
+        "Transportation",
+        "Some",
+        "Can be seen"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ Cyclists (Subject พหูพจน์): แปลว่า \"เหล่านักปั่นจักรยานกำลังขี่อยู่ทั้งสองฝั่งของเส้นถนน\""
+    },
+    {
+      "id": 5,
+      "question": "Blank 5: ...the area may be a popular tourist ____________ or shopping district.",
+      "choices": [
+        "destination",
+        "transportation",
+        "cyclists",
+        "numerous"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ destination: คำคู่กับ tourist destination แปลว่า \"จุดหมายปลายทางของนักท่องเที่ยว\""
+    },
+    {
+      "id": 6,
+      "question": "Blank 6: Two tall buildings ____________ in the distance...",
+      "choices": [
+        "can be seen",
+        "destination",
+        "transportation",
+        "cyclists"
+      ],
+      "answer": 0,
+      "paragraphRef": "pic-desc",
+      "explanation": "ตอบ can be seen: กริยา Passive Voice แปลว่า \"สามารถมองเห็นตึกสูง 2 ตึกได้แต่ไกล\""
+    }
+  ]
+},
+{
+  "id": "test2-act4",
+  "title": "Test 2 (บ่ายนี้) Activity 4: Greenfield Chocolate Factory Email (6 ข้อ)",
+  "thaiTitle": "แนวข้อสอบ Test 2 ตอนที่ 4: จดหมายอีเมลฉลองครบรอบ 50 ปี โรงงานช็อกโกแลต (6 ข้อ)",
+  "unit": "Unit 8",
+  "examType": "Test 2 Exam",
+  "readingTime": "4 นาที",
+  "wordCount": 240,
+  "difficulty": "Exam Level",
+  "summary": "จดหมายแจ้งลูกค้าคนสำคัญเรื่องงานลดราคาฉลองครบรอบ 50 ปี ลดราคาสินค้า 40% และการจับรางวัลใหญ่ทริปเที่ยวเกาะภูเก็ต 3 คืน รายได้ขายบัตรบริจาคการกุศลเด็ก",
+  "paragraphs": [
+    {
+      "id": "email",
+      "label": "Official Email",
+      "title": "Anniversary Sale and Lucky Draw Announcement",
+      "text": "Greenfield Chocolate Factory\n125 Maple Avenue, Vancouver, Canada V6B 2W9\nOctober 10th, 2026\n\nDear Ms. Wilson,\n\nANNIVERSARY SALE AND LUCKY DRAW\n\nAs a valued customer, we are delighted to inform you about our upcoming anniversary sale in celebration of our company’s 50th anniversary. We would like you to be among the first to learn about this special event.\n\nThe prices of all chocolates, candies, and snack products will be reduced by 40% from October 15th to October 31st, 2026.\n\nAs part of our annual tradition, we are offering our customers a chance to win a special prize. This year, the grand prize is a three-night stay on Phuket Island, Thailand. The lucky winner will also receive three complimentary luxury dinners and a guided island tour.\n\nTo enter the lucky draw, please purchase a raffle ticket for $15. All proceeds will be donated to local children's charities and educational foundations. Tickets are available through our official Facebook page and website.\n\nThank you for your continued support. We look forward to welcoming you to our anniversary celebration and sharing this special occasion with you.\n\nBest regards,\nEmily Greenfield\nMarketing Director, Greenfield Chocolate Factory",
+      "thai": "โรงงานช็อกโกแลต Greenfield\n125 เมเปิลอเวนิว แวนคูเวอร์ แคนาดา\n10 ตุลาคม 2026\n\nเรียน คุณวิลสัน\n\nงานลดราคาฉลองครบรอบและการจับฉลากชิงโชค\n\nในฐานะลูกค้าคนสำคัญ เรามีความยินดีเป็นอย่างยิ่งที่จะแจ้งให้ท่านทราบเกี่ยวกับงานลดราคาฉลองครบรอบที่กำลังจะมาถึง เพื่อเฉลิมฉลองครบรอบ 50 ปีของบริษัทเรา\n\nราคาสินค้าช็อกโกแลต ลูกกวาด และขนมขบเคี้ยวทั้งหมดจะลดราคาลง 40% ตั้งแต่วันที่ 15 ตุลาคม ถึง 31 ตุลาคม 2026\n\nและตามธรรมเนียมประจำปีของเรา เราขอมอบโอกาสให้ลูกค้าได้ลุ้นรางวัลพิเศษ โดยรางวัลใหญ่ในปีนี้คือ ที่พัก 3 คืนบนเกาะภูเก็ต ประเทศไทย ผู้โชคดียังจะได้รับอาหารค่ำสุดหรูฟรี 3 มื้อ พร้อมทัวร์ชมเกาะพร้อมไกด์\n\nหากต้องการเข้าร่วมการจับฉลากชิงโชค กรุณาซื้อบัตรชิงโชคในราคา 15 ดอลลาร์ รายได้ทั้งหมดจะนำไปบริจาคให้กับองค์กรการกุศลเพื่อเด็กและมูลนิธิการศึกษาในท้องถิ่น บัตรมีจำหน่ายผ่านทางหน้า Facebook และเว็บไซต์อย่างเป็นทางการของเรา",
+      "keyPoints": [
+        "จัดงานเพื่อ: ฉลองครบรอบ 50 ปีของบริษัท (50th anniversary)",
+        "ส่วนลด: 40% (chocolates, candies, snacks)",
+        "ช่วงเวลา: 15–31 ตุลาคม 2026 (จดหมายส่งวันที่ 10 ต.ค.)",
+        "รางวัลใหญ่ (Grand prize): ที่พัก 3 คืนบนเกาะภูเก็ต ประเทศไทย",
+        "เงินขายบัตร $15 นำไป: บริจาคให้องค์กรการกุศลเพื่อเด็กและมูลนิธิการศึกษา",
+        "ช่องทางซื้อบัตร: Facebook page และ official website"
+      ]
+    }
+  ],
+  "vocabGlossary": [
+    {
+      "word": "anniversary",
+      "pos": "noun",
+      "thai": "วันครบรอบปี",
+      "context": "Celebration of our company's 50th anniversary."
+    },
+    {
+      "word": "complimentary",
+      "pos": "adjective",
+      "thai": "ให้ฟรี (ไม่คิดค่าใช้จ่าย)",
+      "context": "Three complimentary luxury dinners."
+    },
+    {
+      "word": "proceeds",
+      "pos": "noun (plural)",
+      "thai": "รายได้ที่ได้จากการจัดกิจกรรม/ขายบัตร",
+      "context": "All proceeds will be donated to local children's charities."
+    },
+    {
+      "word": "raffle ticket",
+      "pos": "noun phrase",
+      "thai": "สลากชิงโชค / บัตรการกุศล",
+      "context": "Please purchase a raffle ticket for $15."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "1. Why is Greenfield Chocolate Factory organizing the special sale?",
+      "choices": [
+        "A. To introduce a new chocolate product",
+        "B. To celebrate the company's 50th anniversary",
+        "C. To attract new employees",
+        "D. To open a new factory"
+      ],
+      "answer": 1,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุว่า: \"...in celebration of our company’s 50th anniversary.\" (เพื่อฉลองครบรอบ 50 ปี)"
+    },
+    {
+      "id": 2,
+      "question": "2. How much will the prices of the products be reduced?",
+      "choices": [
+        "A. 15%",
+        "B. 30%",
+        "C. 40%",
+        "D. 50%"
+      ],
+      "answer": 2,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุชัดเจน: \"...will be reduced by 40%...\" (ลดราคาลง 40%)"
+    },
+    {
+      "id": 3,
+      "question": "3. When will the anniversary sale take place?",
+      "choices": [
+        "A. October 1st–10th, 2026",
+        "B. October 10th–15th, 2026",
+        "C. October 15th–31st, 2026",
+        "D. October 20th–November 10th, 2026"
+      ],
+      "answer": 2,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุ: \"...from October 15th to October 31st, 2026.\" (วันที่ 10 ต.ค. คือวันที่เขียนจดหมาย)"
+    },
+    {
+      "id": 4,
+      "question": "4. What is the grand prize for the lucky draw?",
+      "choices": [
+        "A. A five-night stay in Vancouver",
+        "B. A three-night stay on Phuket Island",
+        "C. A free trip to Chiang Mai",
+        "D. A one-week stay in Canada"
+      ],
+      "answer": 1,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุ: \"...the grand prize is a three-night stay on Phuket Island, Thailand.\""
+    },
+    {
+      "id": 5,
+      "question": "5. What will the money from the raffle tickets be used for?",
+      "choices": [
+        "A. Building a new factory",
+        "B. Organizing the anniversary party",
+        "C. Buying new chocolate-making machines",
+        "D. Supporting children's charities and educational foundations"
+      ],
+      "answer": 3,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุ: \"All proceeds will be donated to local children's charities and educational foundations.\""
+    },
+    {
+      "id": 6,
+      "question": "6. How can customers purchase raffle tickets?",
+      "choices": [
+        "A. Through the company's Facebook page and website",
+        "B. Only at the factory",
+        "C. By contacting the company's employees by phone",
+        "D. At local shopping malls only"
+      ],
+      "answer": 0,
+      "paragraphRef": "email",
+      "explanation": "ในอีเมลระบุ: \"Tickets are available through our official Facebook page and website.\""
+    }
+  ]
+}
 ];

@@ -158,7 +158,7 @@ const getBlankedSentence = (sentence, word) => {
   return sentence.replace(fallbackRegex, '[ ________ ]');
 };
 
-export default function VocabTab({ speech }) {
+export default function VocabTab({ speech, globalSoundEnabled = true, onAddGlobalXp }) {
   // Modes: 
   // 'single'   = Flashcards 1 by 1
   // 'rush'     = Speed Rush (4-Choice Rapid Fire with 60s countdown)
@@ -179,7 +179,16 @@ export default function VocabTab({ speech }) {
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const [xp, setXp] = useState(0);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(globalSoundEnabled);
+
+  useEffect(() => {
+    setSoundEnabled(globalSoundEnabled);
+  }, [globalSoundEnabled]);
+
+  const addEarnedXp = (amount) => {
+    setXp(prev => prev + amount);
+    if (onAddGlobalXp) onAddGlobalXp(amount, 'ฝึกคำศัพท์');
+  };
 
   // ----------------------------------------------------
   // DECK MANAGEMENT (Never remove words mid-session!)
@@ -387,7 +396,7 @@ export default function VocabTab({ speech }) {
 
   const handleMarkMastered = () => {
     const earnedXp = 10 + Math.min(streak * 2, 20);
-    setXp(prev => prev + earnedXp);
+    addEarnedXp(earnedXp);
 
     const nextStreak = streak + 1;
     setStreak(nextStreak);

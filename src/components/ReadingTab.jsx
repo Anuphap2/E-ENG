@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { readingPassages } from '../data/readingData';
 import confetti from 'canvas-confetti';
+import { soundEffects } from '../utils/soundEffects';
 import { 
   BookOpen, 
   Sparkles, 
@@ -24,10 +25,12 @@ import {
   Clock, 
   Compass, 
   ZoomIn, 
-  ZoomOut
+  ZoomOut,
+  Flame,
+  Zap
 } from 'lucide-react';
 
-export default function ReadingTab({ speech, onNavigateQuiz }) {
+export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true, onAddXp }) {
   // Active selected passage
   const [selectedPassageId, setSelectedPassageId] = useState('curie');
   const [selectedUnitFilter, setSelectedUnitFilter] = useState('all');
@@ -48,6 +51,7 @@ export default function ReadingTab({ speech, onNavigateQuiz }) {
   // Filter passages
   const filteredPassages = readingPassages.filter(p => {
     if (selectedUnitFilter === 'all') return true;
+    if (selectedUnitFilter === 'test2') return p.id.startsWith('test2');
     return p.unit === selectedUnitFilter;
   });
 
@@ -63,9 +67,42 @@ export default function ReadingTab({ speech, onNavigateQuiz }) {
     setHighlightedParagraph(null);
   }, [selectedPassageId]);
 
+  // Keyboard navigation on PC for Reading
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+      if (subTab !== 'read') return;
+
+      if (e.key === 'ArrowLeft') {
+        if (activeQuestionIdx > 0) {
+          setActiveQuestionIdx(prev => prev - 1);
+        }
+      } else if (e.key === 'ArrowRight') {
+        if (activeQuestionIdx < currentPassage.questions.length - 1) {
+          setActiveQuestionIdx(prev => prev + 1);
+        }
+      } else if (['1', '2', '3', '4'].includes(e.key)) {
+        const choiceIdx = parseInt(e.key, 10) - 1;
+        const q = currentPassage.questions[activeQuestionIdx];
+        if (q) handleSelectAnswer(q.id, choiceIdx);
+      } else if (['a', 'b', 'c', 'd', 'A', 'B', 'C', 'D'].includes(e.key)) {
+        const keyMap = { a: 0, b: 1, c: 2, d: 3, A: 0, B: 1, C: 2, D: 3 };
+        const choiceIdx = keyMap[e.key];
+        const q = currentPassage.questions[activeQuestionIdx];
+        if (q) handleSelectAnswer(q.id, choiceIdx);
+      } else if (e.key === 't' || e.key === 'T') {
+        setShowThaiTranslation(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [subTab, activeQuestionIdx, currentPassage, isCurrentSubmitted]);
+
   // Handle selecting an answer
   const handleSelectAnswer = (qId, choiceIdx) => {
     if (isCurrentSubmitted) return;
+    soundEffects.playClick(soundEnabled);
     setUserAnswers(prev => ({
       ...prev,
       [currentPassage.id]: {
@@ -86,11 +123,16 @@ export default function ReadingTab({ speech, onNavigateQuiz }) {
     });
 
     if (correct === currentPassage.questions.length) {
+      soundEffects.playFanfare(soundEnabled);
+      if (onAddXp) onAddXp(60, `ตอบถูกครบ 100% บทอ่าน ${currentPassage.title}`);
       confetti({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 }
       });
+    } else {
+      soundEffects.playCorrect(soundEnabled);
+      if (onAddXp) onAddXp(correct * 10, `ทำแบบฝึกหัดบทอ่าน ${currentPassage.title}`);
     }
   };
 
@@ -196,16 +238,17 @@ export default function ReadingTab({ speech, onNavigateQuiz }) {
                   onChange={(e) => setSelectedUnitFilter(e.target.value)}
                   className="border border-slate-200 rounded-xl px-2.5 py-1 text-xs text-slate-700 font-medium outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="all">ทุก Unit (5 บทความ)</option>
+                  <option value="all">บทความทั้งหมด ({readingPassages.length} เรื่อง)</option>
+                  <option value="test2">🔥 ข้อสอบ Test 2 (บ่ายนี้ 4 ตอน)</option>
                   <option value="Unit 6">Unit 6: IELTS (Marie Curie)</option>
                   <option value="Unit 7">Unit 7: TOEFL (Artisans)</option>
-                  <option value="Unit 8">Unit 8: TOEIC (Logistics)</option>
-                  <option value="Unit 5">Unit 5: Study (Degree Policy)</option>
+                  <option value="Unit 8">Unit 8: TOEIC (Logistics / Email)</option>
+                  <option value="Unit 5">Unit 5: Study (Degree Policy / Cyclists)</option>
                 </select>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
               {filteredPassages.map((p) => {
                 const isSelected = selectedPassageId === p.id;
                 const isSub = submittedPassages.has(p.id);
