@@ -24,8 +24,10 @@ import {
   FileText,
   Check,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Languages
 } from 'lucide-react';
+import ClickableWordText from './ClickableWordText';
 
 export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,6 +42,8 @@ export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
   const [filterMistakesOnly, setFilterMistakesOnly] = useState(false);
   const [showTricksModal, setShowTricksModal] = useState(false);
   const [activeTrickPart, setActiveTrickPart] = useState('all');
+  const [showQuestionTranslations, setShowQuestionTranslations] = useState({});
+  const [showChoiceTranslations, setShowChoiceTranslations] = useState({});
 
   const timerRef = useRef(null);
 
@@ -489,17 +493,52 @@ export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
           {/* Context / Reading Passage */}
           {activeQuestion.passage && (
             <div className="p-4 md:p-5 bg-slate-50/90 rounded-2xl border border-slate-200 text-xs md:text-sm text-slate-800 leading-relaxed space-y-1.5 font-inter">
-              <div className="flex items-center gap-2 font-sarabun font-bold text-slate-900 text-xs uppercase tracking-wide">
-                <BookOpen className="w-4 h-4 text-rose-600" />
-                <span>เนื้อหาประกอบโจทย์ (Passage Context):</span>
+              <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
+                <div className="flex items-center gap-2 font-sarabun font-bold text-slate-900 text-xs uppercase tracking-wide">
+                  <BookOpen className="w-4 h-4 text-rose-600" />
+                  <span>เนื้อหาประกอบโจทย์ (Passage Context - แตะคำศัพท์เพื่อดูคำแปล):</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-semibold hidden sm:inline">
+                  แตะคำเพื่อฟังเสียง & ดูคำศัพท์
+                </span>
               </div>
-              <p className="whitespace-pre-line pl-1">{activeQuestion.passage}</p>
+              <p className="whitespace-pre-line pl-1 leading-relaxed">
+                <ClickableWordText text={activeQuestion.passage} />
+              </p>
             </div>
           )}
 
-          {/* Question Text */}
-          <div className="text-base md:text-lg font-bold text-slate-900 leading-snug">
-            {activeQuestion.q}
+          {/* Question Text with Quick Translate */}
+          <div className="space-y-2">
+            <div className="flex items-start justify-between gap-3">
+              <div className="text-base md:text-lg font-bold text-slate-900 leading-snug flex-grow">
+                <ClickableWordText text={activeQuestion.q} />
+              </div>
+
+              {activeQuestion.qTh && (
+                <button
+                  type="button"
+                  onClick={() => setShowQuestionTranslations(prev => ({ ...prev, [currentQId]: !prev[currentQId] }))}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border shrink-0 ${
+                    showQuestionTranslations[currentQId]
+                      ? 'bg-rose-600 text-white border-rose-600 shadow-2xs'
+                      : 'bg-rose-50 hover:bg-rose-100 text-rose-800 border-rose-200'
+                  }`}
+                  title="แปลโจทย์เป็นภาษาไทย"
+                >
+                  <Languages className="w-3.5 h-3.5" />
+                  <span>{showQuestionTranslations[currentQId] ? 'ซ่อนแปลโจทย์' : 'แปลโจทย์'}</span>
+                </button>
+              )}
+            </div>
+
+            {/* Display Question Thai Translation */}
+            {showQuestionTranslations[currentQId] && activeQuestion.qTh && (
+              <div className="p-3 bg-rose-50/90 text-rose-950 font-bold text-xs md:text-sm rounded-xl border border-rose-200 animate-fadeIn flex items-center gap-2">
+                <span className="text-xs bg-rose-200/80 text-rose-800 px-2 py-0.5 rounded-md font-black shrink-0">TH</span>
+                <span>{activeQuestion.qTh}</span>
+              </div>
+            )}
           </div>
 
           {/* Quick Tip / Trick Banner for this question */}
@@ -520,6 +559,32 @@ export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
               </button>
             </div>
           )}
+
+          {/* Options Header with Quick Translate All */}
+          <div className="flex items-center justify-between text-[11px] text-slate-500 px-1 border-t border-slate-100 pt-2">
+            <span>แตะที่คำศัพท์ในช้อยส์เพื่อดูคำแปล หรือกด <Scissors className="w-3 h-3 inline text-slate-500" /> เพื่อตัดช้อยส์</span>
+            {activeQuestion.optionsTh && (
+              <button
+                type="button"
+                onClick={() => {
+                  const allShown = [0, 1, 2, 3].every(idx => showChoiceTranslations[currentQId]?.[idx]);
+                  setShowChoiceTranslations(prev => ({
+                    ...prev,
+                    [currentQId]: {
+                      0: !allShown,
+                      1: !allShown,
+                      2: !allShown,
+                      3: !allShown
+                    }
+                  }));
+                }}
+                className="text-rose-700 hover:text-rose-900 font-bold flex items-center gap-1 hover:underline cursor-pointer transition text-xs"
+              >
+                <Languages className="w-3.5 h-3.5" />
+                <span>{[0, 1, 2, 3].every(idx => showChoiceTranslations[currentQId]?.[idx]) ? 'ซ่อนคำแปลช้อยส์' : '🌐 แปลทุกช้อยส์ (ไทย)'}</span>
+              </button>
+            )}
+          </div>
 
           {/* Options Grid */}
           <div className="grid sm:grid-cols-2 gap-3">
@@ -552,6 +617,11 @@ export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
                 }
               }
 
+              const choiceLetter = String.fromCharCode(65 + optIdx);
+              const optClean = opt.startsWith('A. ') || opt.startsWith('B. ') || opt.startsWith('C. ') || opt.startsWith('D. ') 
+                ? opt.substring(3) 
+                : opt;
+
               return (
                 <div
                   key={optIdx}
@@ -559,22 +629,60 @@ export default function Test2Tab({ speech, soundEnabled = true, onAddXp }) {
                   className={`p-4 rounded-2xl border-2 transition flex items-start gap-3 relative cursor-pointer group ${btnStyle}`}
                 >
                   <span className={`w-7 h-7 rounded-lg border text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${badgeStyle}`}>
-                    {String.fromCharCode(65 + optIdx)}
+                    {choiceLetter}
                   </span>
-                  <span className="leading-relaxed flex-grow pt-0.5 text-xs md:text-sm">
-                    {opt.startsWith('A. ') || opt.startsWith('B. ') || opt.startsWith('C. ') || opt.startsWith('D. ') 
-                      ? opt.substring(3) 
-                      : opt}
-                  </span>
+                  
+                  <div className="flex-grow space-y-1.5 pt-0.5">
+                    <ClickableWordText
+                      text={optClean}
+                      choiceLetter={choiceLetter}
+                      onSelectChoice={() => handleSelectOption(currentQId, optIdx)}
+                      className="leading-relaxed block text-xs md:text-sm font-medium"
+                    />
+
+                    {/* Inline Full Choice Thai Translation */}
+                    {showChoiceTranslations[currentQId]?.[optIdx] && activeQuestion.optionsTh?.[optIdx] && (
+                      <div className="text-[11px] font-bold text-rose-900 bg-rose-50/90 p-2 rounded-xl border border-rose-200/80 animate-fadeIn flex items-center gap-1.5">
+                        <span className="text-[10px] bg-rose-200 text-rose-800 px-1.5 py-0.2 rounded font-black shrink-0">TH</span>
+                        <span>{activeQuestion.optionsTh[optIdx].replace(/^[A-D]\.\s*/, '')}</span>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
+                    {/* Translate this choice button */}
+                    {activeQuestion.optionsTh && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowChoiceTranslations(prev => ({
+                            ...prev,
+                            [currentQId]: {
+                              ...(prev[currentQId] || {}),
+                              [optIdx]: !prev[currentQId]?.[optIdx]
+                            }
+                          }));
+                        }}
+                        className={`p-1.5 rounded-lg transition ${
+                          showChoiceTranslations[currentQId]?.[optIdx]
+                            ? 'bg-rose-100 text-rose-800 font-bold'
+                            : 'opacity-60 group-hover:opacity-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700'
+                        }`}
+                        title={showChoiceTranslations[currentQId]?.[optIdx] ? "ซ่อนคำแปลช้อยส์นี้" : "แปลช้อยส์นี้เป็นภาษาไทย"}
+                      >
+                        <Languages className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+
+                    {/* Eliminate button */}
                     <button
                       type="button"
                       onClick={(e) => toggleEliminateOption(currentQId, optIdx, e)}
-                      className={`p-1 rounded-md transition ${
+                      className={`p-1.5 rounded-lg transition ${
                         isEliminated 
                           ? 'bg-amber-100 text-amber-800' 
-                          : 'opacity-0 group-hover:opacity-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700'
+                          : 'opacity-60 group-hover:opacity-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700'
                       }`}
                       title={isEliminated ? "ยกเลิกการตัดช้อยส์นี้" : "ตัดช้อยส์นี้"}
                     >

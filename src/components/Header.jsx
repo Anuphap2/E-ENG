@@ -15,10 +15,12 @@ import {
   Trophy,
   Flame,
   Zap,
+  Languages,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
 import { getLevelInfo } from '../utils/gamification';
+import { useWordLookup } from '../context/WordLookupContext';
 
 export default function Header({ 
   activeTab, 
@@ -36,6 +38,7 @@ export default function Header({
   const navRef = useRef(null);
   const percentCompleted = Math.round((answeredCount / totalCount) * 100);
   const levelInfo = getLevelInfo(xp);
+  const { isLookupEnabled, toggleLookupEnabled } = useWordLookup();
 
   const tabs = [
     { 
@@ -189,6 +192,20 @@ export default function Header({
             >
               {soundEnabled ? <Volume2 className="w-3.5 h-3.5 text-blue-400" /> : <VolumeX className="w-3.5 h-3.5 text-slate-400" />}
               <span className="hidden md:inline">{soundEnabled ? 'เสียงเปิด' : 'เสียงปิด'}</span>
+            </button>
+
+            {/* Tap to Translate Toggle */}
+            <button
+              onClick={toggleLookupEnabled}
+              className={`p-1 px-2 rounded-xl border transition text-[11px] flex items-center gap-1 font-bold ${
+                isLookupEnabled 
+                  ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-2xs' 
+                  : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-slate-200'
+              }`}
+              title={isLookupEnabled ? 'โหมดแตะแปลศัพท์เปิดอยู่ (คลิกคำศัพท์หรือช้อยส์เพื่อแปล)' : 'โหมดแตะแปลศัพท์ปิดอยู่ (กดเพื่อเปิด)'}
+            >
+              <Languages className="w-3.5 h-3.5 text-slate-900" />
+              <span>{isLookupEnabled ? 'แปลศัพท์: ON' : 'แปลศัพท์: OFF'}</span>
             </button>
 
             <span className="text-slate-700 hidden sm:inline">|</span>

@@ -9,6 +9,8 @@ import QuizTab from './components/QuizTab';
 import Test2Tab from './components/Test2Tab';
 import Footer from './components/Footer';
 import AchievementsModal from './components/AchievementsModal';
+import WordLookupModal from './components/WordLookupModal';
+import { WordLookupProvider } from './context/WordLookupContext';
 import { useSpeech } from './hooks/useSpeech';
 import { questionsData } from './data/questionsData';
 import { 
@@ -161,106 +163,111 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-100 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900 font-sarabun">
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        answeredCount={answeredCount}
-        totalCount={questionsData.length}
-        score={totalScore}
-        weightedScore={weightedScore}
-        xp={gamification.xp}
-        streak={gamification.streak}
-        soundEnabled={soundEnabled}
-        setSoundEnabled={setSoundEnabled}
-        onOpenAchievements={() => setIsAchievementsOpen(true)}
-      />
+    <WordLookupProvider speech={speech}>
+      <div className="min-h-screen flex flex-col bg-slate-100 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900 font-sarabun">
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          answeredCount={answeredCount}
+          totalCount={questionsData.length}
+          score={totalScore}
+          weightedScore={weightedScore}
+          xp={gamification.xp}
+          streak={gamification.streak}
+          soundEnabled={soundEnabled}
+          setSoundEnabled={setSoundEnabled}
+          onOpenAchievements={() => setIsAchievementsOpen(true)}
+        />
 
-      <main className="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
-        {activeTab === 'overview' && (
-          <OverviewTab
-            onSelectUnit={handleSelectUnitLesson}
-            onStartFullExam={handleStartFullExam}
-            onNavigateTab={(tabId) => {
-              setActiveTab(tabId);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
-        )}
+        <main className="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+          {activeTab === 'overview' && (
+            <OverviewTab
+              onSelectUnit={handleSelectUnitLesson}
+              onStartFullExam={handleStartFullExam}
+              onNavigateTab={(tabId) => {
+                setActiveTab(tabId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          )}
 
-        {activeTab === 'lessons' && (
-          <LessonsTab
-            initialUnit={activeLessonUnit}
-            onStartUnitQuiz={handleStartUnitQuiz}
-            speakText={speech.speak}
-            soundEnabled={soundEnabled}
-            onAddXp={handleAddXp}
-          />
-        )}
+          {activeTab === 'lessons' && (
+            <LessonsTab
+              initialUnit={activeLessonUnit}
+              onStartUnitQuiz={handleStartUnitQuiz}
+              speakText={speech.speak}
+              soundEnabled={soundEnabled}
+              onAddXp={handleAddXp}
+            />
+          )}
 
-        {activeTab === 'listeningLab' && (
-          <ListeningLabTab
-            speech={speech}
-            onJumpToUnit={(unit) => handleStartUnitQuiz(unit)}
-            soundEnabled={soundEnabled}
-            onAddXp={handleAddXp}
-          />
-        )}
+          {activeTab === 'listeningLab' && (
+            <ListeningLabTab
+              speech={speech}
+              onJumpToUnit={(unit) => handleStartUnitQuiz(unit)}
+              soundEnabled={soundEnabled}
+              onAddXp={handleAddXp}
+            />
+          )}
 
-        {activeTab === 'reading' && (
-          <ReadingTab
-            speech={speech}
-            onNavigateQuiz={handleStartFullExam}
-            soundEnabled={soundEnabled}
-            onAddXp={handleAddXp}
-          />
-        )}
+          {activeTab === 'reading' && (
+            <ReadingTab
+              speech={speech}
+              onNavigateQuiz={handleStartFullExam}
+              soundEnabled={soundEnabled}
+              onAddXp={handleAddXp}
+            />
+          )}
 
-        {activeTab === 'vocab' && (
-          <VocabTab 
-            speech={speech} 
-            globalSoundEnabled={soundEnabled}
-            onAddGlobalXp={handleAddXp}
-          />
-        )}
+          {activeTab === 'vocab' && (
+            <VocabTab 
+              speech={speech} 
+              globalSoundEnabled={soundEnabled}
+              onAddGlobalXp={handleAddXp}
+            />
+          )}
 
-        {activeTab === 'test2' && (
-          <Test2Tab
-            speech={speech}
-            soundEnabled={soundEnabled}
-            onAddXp={handleAddXp}
-          />
-        )}
+          {activeTab === 'test2' && (
+            <Test2Tab
+              speech={speech}
+              soundEnabled={soundEnabled}
+              onAddXp={handleAddXp}
+            />
+          )}
 
-        {activeTab === 'quiz' && (
-          <QuizTab
-            speech={speech}
-            userAnswers={userAnswers}
-            setUserAnswers={setUserAnswers}
-            flaggedQuestions={flaggedQuestions}
-            setFlaggedQuestions={setFlaggedQuestions}
-            externalFilter={selectedQuizUnit}
-            onClearExternalFilter={() => setSelectedQuizUnit(null)}
-            initialQuestionId={initialQuestionId}
-            soundEnabled={soundEnabled}
-            onAddXp={handleAddXp}
-            streak={gamification.streak}
-            onRecordStreak={handleRecordStreak}
-          />
-        )}
-      </main>
+          {activeTab === 'quiz' && (
+            <QuizTab
+              speech={speech}
+              userAnswers={userAnswers}
+              setUserAnswers={setUserAnswers}
+              flaggedQuestions={flaggedQuestions}
+              setFlaggedQuestions={setFlaggedQuestions}
+              externalFilter={selectedQuizUnit}
+              onClearExternalFilter={() => setSelectedQuizUnit(null)}
+              initialQuestionId={initialQuestionId}
+              soundEnabled={soundEnabled}
+              onAddXp={handleAddXp}
+              streak={gamification.streak}
+              onRecordStreak={handleRecordStreak}
+            />
+          )}
+        </main>
 
-      <Footer onGoToQuiz={handleStartFullExam} />
+        <Footer onGoToQuiz={handleStartFullExam} />
 
-      {/* Trophies & Achievements Modal */}
-      <AchievementsModal
-        isOpen={isAchievementsOpen}
-        onClose={() => setIsAchievementsOpen(false)}
-        xp={gamification.xp}
-        streak={gamification.streak}
-        bestStreak={gamification.bestStreak}
-        unlockedAchievements={gamification.unlockedAchievements}
-      />
-    </div>
+        {/* Trophies & Achievements Modal */}
+        <AchievementsModal
+          isOpen={isAchievementsOpen}
+          onClose={() => setIsAchievementsOpen(false)}
+          xp={gamification.xp}
+          streak={gamification.streak}
+          bestStreak={gamification.bestStreak}
+          unlockedAchievements={gamification.unlockedAchievements}
+        />
+
+        {/* Global Word Translate Popover */}
+        <WordLookupModal />
+      </div>
+    </WordLookupProvider>
   );
 }

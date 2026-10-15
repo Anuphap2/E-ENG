@@ -4,6 +4,7 @@ import ScoreReportModal from './ScoreReportModal';
 import HighlightedTranscript from './HighlightedTranscript';
 import ExamBlueprintModal from './ExamBlueprintModal';
 import ExamBriefingModal from './ExamBriefingModal';
+import ClickableWordText from './ClickableWordText';
 import { soundEffects } from '../utils/soundEffects';
 import { 
   Award, 
@@ -793,11 +794,18 @@ export default function QuizTab({
             {/* Context / Reading Passage (if present) */}
             {activeQuestion.passage && (
               <div className={`p-5 bg-slate-50/90 rounded-2xl border border-slate-200 text-slate-800 leading-relaxed space-y-2 font-inter ${curFont.pass}`}>
-                <div className="flex items-center gap-2 font-sarabun font-bold text-slate-900 text-xs uppercase tracking-wide">
-                  <BookOpen className="w-4 h-4 text-blue-600" />
-                  <span>บทความ / บริบทประกอบข้อสอบ (Context Passage):</span>
+                <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5">
+                  <div className="flex items-center gap-2 font-sarabun font-bold text-slate-900 text-xs uppercase tracking-wide">
+                    <BookOpen className="w-4 h-4 text-blue-600" />
+                    <span>บทความ / บริบทประกอบข้อสอบ (แตะคำศัพท์เพื่อดูคำแปล):</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-semibold hidden sm:inline">
+                    แตะคำเพื่อฟังเสียง & ดูคำศัพท์
+                  </span>
                 </div>
-                <p className="whitespace-pre-line pl-1">{activeQuestion.passage}</p>
+                <p className="whitespace-pre-line pl-1 leading-relaxed">
+                  <ClickableWordText text={activeQuestion.passage} />
+                </p>
               </div>
             )}
 
@@ -894,12 +902,12 @@ export default function QuizTab({
 
             {/* Question Text */}
             <div className={`font-bold text-slate-900 leading-snug ${curFont.q}`}>
-              {activeQuestion.q}
+              <ClickableWordText text={activeQuestion.q} />
             </div>
 
             {/* Elimination Tip Banner */}
             <div className="flex items-center justify-between text-[11px] text-slate-400 px-1">
-              <span>เลือกคำตอบที่ถูกต้องที่สุด (คลิกรูป <Scissors className="w-3 h-3 inline text-slate-500" /> เพื่อขีดฆ่าตัดช้อยส์ที่ไม่ใช่)</span>
+              <span>เลือกคำตอบที่ถูกต้องที่สุด (แตะคำศัพท์เพื่อดูความหมาย หรือกด <Scissors className="w-3 h-3 inline text-slate-500" /> เพื่อขีดฆ่าตัดช้อยส์)</span>
               <span className="hidden sm:inline">กด A-D หรือ 1-4 บนคีย์บอร์ดเพื่อเลือก</span>
             </div>
 
@@ -934,6 +942,9 @@ export default function QuizTab({
                   }
                 }
 
+                const choiceLetter = String.fromCharCode(65 + optIdx);
+                const optClean = opt.substring(3);
+
                 return (
                   <div
                     key={optIdx}
@@ -941,10 +952,15 @@ export default function QuizTab({
                     className={`p-4 rounded-2xl border-2 transition flex items-start gap-3 relative cursor-pointer group ${btnStyle} ${curFont.opt}`}
                   >
                     <span className={`w-7 h-7 rounded-lg border text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ${badgeStyle}`}>
-                      {String.fromCharCode(65 + optIdx)}
+                      {choiceLetter}
                     </span>
                     <span className="leading-relaxed flex-grow pt-0.5">
-                      {opt.substring(3)}
+                      <ClickableWordText
+                        text={optClean}
+                        choiceLetter={choiceLetter}
+                        onSelectChoice={() => handleSelectOption(currentQId, optIdx)}
+                        className="leading-relaxed block"
+                      />
                     </span>
 
                     {/* Right action indicators */}
@@ -1234,14 +1250,16 @@ export default function QuizTab({
                 {/* Passage (if present) */}
                 {q.passage && (
                   <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-inter">
-                    <strong className="block text-slate-900 font-bold mb-1 font-sarabun">บทความประกอบ:</strong>
-                    <p className="whitespace-pre-line">{q.passage}</p>
+                    <strong className="block text-slate-900 font-bold mb-1 font-sarabun">บทความประกอบ (แตะคำศัพท์เพื่อแปล):</strong>
+                    <p className="whitespace-pre-line leading-relaxed">
+                      <ClickableWordText text={q.passage} />
+                    </p>
                   </div>
                 )}
 
                 {/* Question */}
                 <div className={`font-bold text-slate-900 leading-snug ${curFont.q}`}>
-                  {q.q}
+                  <ClickableWordText text={q.q} />
                 </div>
 
                 {/* Options */}
@@ -1265,17 +1283,27 @@ export default function QuizTab({
                       }
                     }
 
+                    const choiceLetter = String.fromCharCode(65 + optIdx);
+                    const optClean = opt.substring(3);
+
                     return (
-                      <button
+                      <div
                         key={optIdx}
                         onClick={() => handleSelectOption(qId, optIdx)}
-                        className={`text-left p-3.5 rounded-xl border text-xs md:text-sm transition flex items-start gap-2.5 ${btnStyle}`}
+                        className={`text-left p-3.5 rounded-xl border text-xs md:text-sm transition flex items-start gap-2.5 cursor-pointer ${btnStyle}`}
                       >
                         <span className="w-6 h-6 rounded-full bg-slate-100 border text-slate-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
-                          {String.fromCharCode(65 + optIdx)}
+                          {choiceLetter}
                         </span>
-                        <span className="leading-relaxed">{opt.substring(3)}</span>
-                      </button>
+                        <span className="leading-relaxed flex-grow">
+                          <ClickableWordText
+                            text={optClean}
+                            choiceLetter={choiceLetter}
+                            onSelectChoice={() => handleSelectOption(qId, optIdx)}
+                            className="leading-relaxed block"
+                          />
+                        </span>
+                      </div>
                     );
                   })}
                 </div>

@@ -29,6 +29,7 @@ import {
   Flame,
   Zap
 } from 'lucide-react';
+import ClickableWordText from './ClickableWordText';
 
 export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true, onAddXp }) {
   // Active selected passage
@@ -424,7 +425,7 @@ export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true
 
                         {/* English Text */}
                         <p className={`font-serif text-slate-900 tracking-normal ${fontClasses[fontSize]}`}>
-                          {p.text}
+                          <ClickableWordText text={p.text} />
                         </p>
 
                         {/* Thai Translation & Keypoints Box (Bilingual Toggle) */}
@@ -532,7 +533,7 @@ export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true
                       )}
                     </div>
                     <h5 className="text-sm font-bold text-slate-900 leading-snug">
-                      {activeQuestion.question}
+                      <ClickableWordText text={activeQuestion.question} />
                     </h5>
                   </div>
 
@@ -542,13 +543,13 @@ export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true
                       const isChosen = currentAnswers[activeQuestion.id] === cIdx;
                       const showCorrect = isCurrentSubmitted && cIdx === activeQuestion.answer;
                       const showWrong = isCurrentSubmitted && isChosen && cIdx !== activeQuestion.answer;
+                      const choiceLetter = String.fromCharCode(65 + cIdx);
 
                       return (
-                        <button
+                        <div
                           key={cIdx}
-                          onClick={() => handleSelectAnswer(activeQuestion.id, cIdx)}
-                          disabled={isCurrentSubmitted}
-                          className={`w-full text-left p-3 rounded-xl text-xs font-semibold transition border-2 flex items-start gap-2.5 select-none ${
+                          onClick={() => !isCurrentSubmitted && handleSelectAnswer(activeQuestion.id, cIdx)}
+                          className={`w-full text-left p-3 rounded-xl text-xs font-semibold transition border-2 flex items-start gap-2.5 cursor-pointer ${
                             showCorrect 
                               ? 'bg-emerald-50 text-emerald-950 border-emerald-500 font-bold ring-1 ring-emerald-300' 
                               : showWrong 
@@ -556,7 +557,7 @@ export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true
                                 : isChosen 
                                   ? 'bg-blue-50 text-blue-950 border-blue-600 font-bold shadow-xs' 
                                   : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200'
-                          }`}
+                          } ${isCurrentSubmitted ? 'cursor-default' : ''}`}
                         >
                           <span className={`w-5 h-5 rounded-lg flex items-center justify-center text-[10px] font-mono font-bold shrink-0 mt-0.5 ${
                             showCorrect 
@@ -567,10 +568,17 @@ export default function ReadingTab({ speech, onNavigateQuiz, soundEnabled = true
                                   ? 'bg-blue-600 text-white' 
                                   : 'bg-slate-100 text-slate-600'
                           }`}>
-                            {String.fromCharCode(65 + cIdx)}
+                            {choiceLetter}
                           </span>
-                          <span className="leading-relaxed">{choice}</span>
-                        </button>
+                          <span className="leading-relaxed flex-grow">
+                            <ClickableWordText
+                              text={choice}
+                              choiceLetter={choiceLetter}
+                              onSelectChoice={() => !isCurrentSubmitted && handleSelectAnswer(activeQuestion.id, cIdx)}
+                              className="leading-relaxed block"
+                            />
+                          </span>
+                        </div>
                       );
                     })}
                   </div>
