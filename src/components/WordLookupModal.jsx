@@ -27,20 +27,36 @@ export default function WordLookupModal() {
       }
 
       const cardWidth = 340;
-      const cardHeight = 260;
-      const scrollY = window.scrollY;
-      const scrollX = window.scrollX;
+      const cardHeight = cardRef.current?.offsetHeight || 260;
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
 
-      let left = targetRect.left + scrollX + (targetRect.width / 2) - (cardWidth / 2);
-      // Clamp horizontally to stay within viewport
-      left = Math.max(16, Math.min(window.innerWidth - cardWidth - 16, left));
+      // Center horizontally on target word and clamp within viewport
+      let left = targetRect.left + (targetRect.width / 2) - (cardWidth / 2);
+      left = Math.max(12, Math.min(vw - cardWidth - 12, left));
 
-      // Try placing above the word first, otherwise place below
-      let top = targetRect.top + scrollY - cardHeight - 12;
-      if (targetRect.top < cardHeight + 20) {
-        // Not enough space above, put below
-        top = targetRect.bottom + scrollY + 12;
+      // Calculate space above and below relative to viewport
+      const spaceBelow = vh - targetRect.bottom;
+      const spaceAbove = targetRect.top;
+
+      let top;
+      // Prefer below the word if at least cardHeight + 12px available
+      if (spaceBelow >= cardHeight + 12) {
+        top = targetRect.bottom + 8;
+      } 
+      // Otherwise place above the word
+      else if (spaceAbove >= cardHeight + 12) {
+        top = targetRect.top - cardHeight - 8;
+      } 
+      // If cramped on both sides, place where there is more space
+      else if (spaceBelow >= spaceAbove) {
+        top = Math.min(targetRect.bottom + 8, vh - cardHeight - 12);
+      } else {
+        top = Math.max(12, targetRect.top - cardHeight - 8);
       }
+
+      // Final boundary clamp to keep entirely on screen
+      top = Math.max(12, Math.min(vh - cardHeight - 12, top));
 
       setCoords({ top, left, isMobile: false });
     };
@@ -110,7 +126,7 @@ export default function WordLookupModal() {
       <div
         ref={cardRef}
         style={!coords.isMobile ? {
-          position: 'absolute',
+          position: 'fixed',
           top: `${coords.top}px`,
           left: `${coords.left}px`,
           width: '350px'
